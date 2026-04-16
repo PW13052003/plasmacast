@@ -111,8 +111,8 @@ def generate_dataset():
 
     df = pd.DataFrame(all_data)
     df = df.sort_values(["center_id", "date"]).reset_index(drop=True)
-    os.makedirs("data", exist_ok=True)
-    df.to_csv("data/donor_data.csv", index=False)
+    os.makedirs("src/data", exist_ok=True)
+    df.to_csv("src/data/donor_data.csv", index=False)
     print(f"Dataset saved! {len(df)} rows generated.")
     return df
 

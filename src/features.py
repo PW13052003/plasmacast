@@ -41,9 +41,9 @@ def engineer_features(df):
     return df
 
 if __name__ == "__main__":
-    df = pd.read_csv("data/donor_data.csv")
+    df = pd.read_csv("src/data/donor_data.csv")
     df_featured = engineer_features(df)
-    df_featured.to_csv("data/donor_data_featured.csv", index=False)
+    df_featured.to_csv("src/data/donor_data_featured.csv", index=False)
     print(f"Featured dataset saved! {len(df_featured)} rows, {len(df_featured.columns)} columns")
     print(df_featured.columns.tolist())
 

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import joblib
 import os
 
-def load_and_split(path="data/donor_data_featured.csv"):
+def load_and_split(path="src/data/donor_data_featured.csv"):
     df = pd.read_csv(path)
     df["date"] = pd.to_datetime(df["date"])
 
@@ -70,11 +70,6 @@ def plot_predictions(model, X_test, y_test, features):
     test_df["actual"] = y_test.values
     test_df["predicted"] = predictions
 
-    # Filter to just Philadelphia for clarity
-    philly_mask = test_df.index[test_df.index.isin(
-        y_test.reset_index().query("index in @test_df.index").index
-    )]
-
     plt.figure(figsize=(14, 5))
     plt.plot(y_test.values[:365], label="Actual", alpha=0.7, color="steelblue")
     plt.plot(predictions[:365], label="Predicted", alpha=0.7, color="darkorange", linestyle="--")
@@ -83,17 +78,17 @@ def plot_predictions(model, X_test, y_test, features):
     plt.ylabel("Donor Count")
     plt.legend()
     plt.tight_layout()
-    plt.savefig("data/predictions_plot.png", dpi=150)
+    plt.savefig("src/data/predictions_plot.png", dpi=150)
     plt.show()
-    print("Plot saved to data/predictions_plot.png")
+    print("Plot saved to src/data/predictions_plot.png")
 
-def save_model(model, features, path="data/model.pkl"):
-    os.makedirs("data", exist_ok=True)
+def save_model(model, features, path="src/data/model.pkl"):
+    os.makedirs("src/data", exist_ok=True)
     joblib.dump({"model": model, "features": features}, path)
     print(f"Model saved to {path}")
 
 
-def load_model(path="data/model.pkl"):
+def load_model(path="src/data/model.pkl"):
     data = joblib.load(path)
     return data["model"], data["features"]
 
