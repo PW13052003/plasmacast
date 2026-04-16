@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
+from sklearn.metrics import mean_absolute_error, root_mean_squared_error
 
 def load_and_split(path="data/donor_data_featured.csv"):
     df = pd.read_csv(path)
@@ -43,6 +44,22 @@ def train_model(X_train, y_train):
     print("Model training complete!")
     return model
 
+def evaluate_model(model, X_test, y_test):
+    predictions = model.predict(X_test)
+
+    mae = mean_absolute_error(y_test, predictions)
+    rmse = root_mean_squared_error(y_test, predictions)
+
+    print("\n=== MODEL EVALUATION ===")
+    print(f"MAE:  {mae:.2f} donors")
+    print(f"RMSE: {rmse:.2f} donors")
+    print(f"Mean actual donor count: {y_test.mean():.2f}")
+    print(f"MAE as % of mean: {(mae / y_test.mean() * 100):.1f}%")
+
+    return predictions
+
+
 if __name__ == "__main__":
     X_train, y_train, X_test, y_test, features = load_and_split()
     model = train_model(X_train, y_train)
+    predictions = evaluate_model(model, X_test, y_test)
