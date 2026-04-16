@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+import os
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 def engineer_features(df):
     df = df.copy()
@@ -41,9 +44,9 @@ def engineer_features(df):
     return df
 
 if __name__ == "__main__":
-    df = pd.read_csv("src/data/donor_data.csv")
+    df = pd.read_csv(os.path.join(DATA_DIR, "donor_data.csv"))
     df_featured = engineer_features(df)
-    df_featured.to_csv("src/data/donor_data_featured.csv", index=False)
+    df_featured.to_csv(os.path.join(DATA_DIR, "donor_data_featured.csv"), index=False)
     print(f"Featured dataset saved! {len(df_featured)} rows, {len(df_featured.columns)} columns")
     print(df_featured.columns.tolist())
 

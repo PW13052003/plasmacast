@@ -6,7 +6,9 @@ import matplotlib.pyplot as plt
 import joblib
 import os
 
-def load_and_split(path="src/data/donor_data_featured.csv"):
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+
+def load_and_split(path=os.path.join(DATA_DIR, "donor_data_featured.csv")):
     df = pd.read_csv(path)
     df["date"] = pd.to_datetime(df["date"])
 
@@ -78,17 +80,17 @@ def plot_predictions(model, X_test, y_test, features):
     plt.ylabel("Donor Count")
     plt.legend()
     plt.tight_layout()
-    plt.savefig("src/data/predictions_plot.png", dpi=150)
+    plt.savefig(os.path.join(DATA_DIR, "predictions_plot.png"), dpi=150)
     plt.show()
     print("Plot saved to src/data/predictions_plot.png")
 
-def save_model(model, features, path="src/data/model.pkl"):
-    os.makedirs("src/data", exist_ok=True)
+def save_model(model, features, path=os.path.join(DATA_DIR, "model.pkl")):
+    os.makedirs(DATA_DIR, exist_ok=True)
     joblib.dump({"model": model, "features": features}, path)
     print(f"Model saved to {path}")
 
 
-def load_model(path="src/data/model.pkl"):
+def load_model(path=os.path.join(DATA_DIR, "model.pkl")):
     data = joblib.load(path)
     return data["model"], data["features"]
 

@@ -5,6 +5,8 @@ import numpy as np
 import holidays
 import os
 
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+
 # Define 5 plasma centers with real coordinates
 CENTERS = {
     "center_philly":  {"city": "Philadelphia", "lat": 39.9526, "lon": -75.1652, "base_donors": 60},
@@ -111,8 +113,8 @@ def generate_dataset():
 
     df = pd.DataFrame(all_data)
     df = df.sort_values(["center_id", "date"]).reset_index(drop=True)
-    os.makedirs("src/data", exist_ok=True)
-    df.to_csv("src/data/donor_data.csv", index=False)
+    os.makedirs(DATA_DIR, exist_ok=True)
+    df.to_csv(os.path.join(DATA_DIR, "donor_data.csv"), index=False)
     print(f"Dataset saved! {len(df)} rows generated.")
     return df
 
