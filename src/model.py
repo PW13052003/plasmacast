@@ -3,6 +3,8 @@ import numpy as np
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error
 import matplotlib.pyplot as plt
+import joblib
+import os
 
 def load_and_split(path="data/donor_data_featured.csv"):
     df = pd.read_csv(path)
@@ -85,8 +87,20 @@ def plot_predictions(model, X_test, y_test, features):
     plt.show()
     print("Plot saved to data/predictions_plot.png")
 
+def save_model(model, features, path="data/model.pkl"):
+    os.makedirs("data", exist_ok=True)
+    joblib.dump({"model": model, "features": features}, path)
+    print(f"Model saved to {path}")
+
+
+def load_model(path="data/model.pkl"):
+    data = joblib.load(path)
+    return data["model"], data["features"]
+
+
 if __name__ == "__main__":
     X_train, y_train, X_test, y_test, features = load_and_split()
     model = train_model(X_train, y_train)
     predictions = evaluate_model(model, X_test, y_test)
     plot_predictions(model, X_test, y_test, features)
+    save_model(model, features)
