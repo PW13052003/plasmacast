@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from xgboost import XGBRegressor
 
 def load_and_split(path="data/donor_data_featured.csv"):
     df = pd.read_csv(path)
@@ -28,6 +29,20 @@ def load_and_split(path="data/donor_data_featured.csv"):
 
     return X_train, y_train, X_test, y_test, features
 
+def train_model(X_train, y_train):
+    model = XGBRegressor(
+        n_estimators=500,
+        learning_rate=0.05,
+        max_depth=6,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        random_state=42,
+        n_jobs=-1
+    )
+    model.fit(X_train, y_train)
+    print("Model training complete!")
+    return model
 
 if __name__ == "__main__":
     X_train, y_train, X_test, y_test, features = load_and_split()
+    model = train_model(X_train, y_train)
