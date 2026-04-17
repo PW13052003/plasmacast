@@ -63,26 +63,108 @@ def evaluate_model(model, X_test, y_test):
 
     return predictions
 
-
-def plot_predictions(model, X_test, y_test, features):
+def plot_residuals(model, X_test, y_test):
+    """
+    Generates a residual plot showing prediction error over time for each city.
+    Residual = Actual - Predicted. A well-performing model should show residuals
+    randomly scattered around zero with no systematic pattern.
+    Saved as: src/data/plot_residuals.png
+    """
     predictions = model.predict(X_test)
 
-    # Plot predicted vs actual for one city
-    test_df = X_test.copy()
-    test_df["actual"] = y_test.values
+    df_full = pd.read_csv(os.path.join(DATA_DIR, "donor_data_featured.csv"))
+    df_full["date"] = pd.to_datetime(df_full["date"])
+    test_df = df_full[df_full["date"].dt.year == 2023].copy().reset_index(drop=True)
     test_df["predicted"] = predictions
+    test_df["actual"] = y_test.values
+    test_df["residual"] = test_df["actual"] - test_df["predicted"]
 
-    plt.figure(figsize=(14, 5))
-    plt.plot(y_test.values[:365], label="Actual", alpha=0.7, color="steelblue")
-    plt.plot(predictions[:365], label="Predicted", alpha=0.7, color="darkorange", linestyle="--")
-    plt.title("Predicted vs Actual Donor Count (2023 - Philadelphia)")
-    plt.xlabel("Day")
-    plt.ylabel("Donor Count")
-    plt.legend()
+    cities = sorted(test_df["city"].unique())
+    colors = plt.cm.tab10.colors
+
+    fig, axes = plt.subplots(5, 2, figsize=(16, 20), sharex=True, sharey=True)
+    axes = axes.flatten()
+
+    for i, city in enumerate(cities):
+        city_df = test_df[test_df["city"] == city].reset_index(drop=True)
+        axes[i].plot(city_df["residual"], color=colors[i], alpha=0.7, linewidth=0.8)
+        axes[i].axhline(y=0, color="black", linestyle="--", linewidth=1)
+        axes[i].set_ylim(-70, 70)
+        axes[i].set_title(city, fontsize=11)
+        axes[i].set_ylabel("Residual (donors)")
+
+    fig.suptitle("Prediction Residuals by City (2023)\nActual − Predicted", fontsize=14)
     plt.tight_layout()
-    plt.savefig(os.path.join(DATA_DIR, "predictions_plot.png"), dpi=150)
+    plt.savefig(os.path.join(DATA_DIR, "plot_residuals.png"), dpi=150)
     plt.show()
-    print("Plot saved to src/data/predictions_plot.png")
+    print("Residual plot saved to src/data/plot_residuals.png")
+
+
+def plot_mae_by_city(model, X_test, y_test):
+    """
+    Generates a horizontal bar chart showing MAE per city as a percentage
+    of each city's average daily donor count. Using percentage rather than
+    absolute MAE allows fair comparison across cities of different sizes —
+    an MAE of 15 donors means very different things for NYC (318 avg donors)
+    vs Jacksonville (38 avg donors).
+    Saved as: src/data/plot_mae_by_city.png
+    """
+    predictions = model.predict(X_test)
+
+    df_full = pd.read_csv(os.path.join(DATA_DIR, "donor_data_featured.csv"))
+    df_full["date"] = pd.to_datetime(df_full["date"])
+    test_df = df_full[df_full["date"].dt.year == 2023].copy().reset_index(drop=True)
+    test_df["predicted"] = predictions
+    test_df["actual"] = y_test.values
+
+    # Calculate MAE as a percentage of each city's average donor count
+    # This normalizes for city size — making all 10 cities directly comparable
+    city_mae = (
+        test_df.groupby("city")
+        .apply(lambda x: (mean_absolute_error(x["actual"], x["predicted"]) / x["actual"].mean()) * 100)
+        .sort_values(ascending=False)
+        .reset_index()
+    )
+    city_mae.columns = ["city", "mae_pct"]
+
+    colors = plt.cm.tab10.colors
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    bars = ax.barh(
+        city_mae["city"],
+        city_mae["mae_pct"],
+        color=colors[:len(city_mae)],
+        alpha=0.8
+    )
+
+    # Add percentage labels on each bar
+    for bar, mae_val in zip(bars, city_mae["mae_pct"]):
+        ax.text(
+            bar.get_width() + 0.1,
+            bar.get_y() + bar.get_height() / 2,
+            f"{mae_val:.1f}%",
+            va="center",
+            fontsize=10
+        )
+
+    # Overall MAE as percentage of overall mean donor count
+    overall_mae_pct = (mean_absolute_error(y_test.values, predictions) / y_test.mean()) * 100
+    ax.axvline(
+        x=overall_mae_pct,
+        color="black",
+        linestyle="--",
+        linewidth=1.5,
+        label=f"Overall MAE: {overall_mae_pct:.1f}%"
+    )
+
+    ax.set_xlabel("MAE as % of Average Daily Donor Count")
+    ax.set_title("Model MAE by City as % of City Average (2023)")
+    ax.legend()
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(DATA_DIR, "plot_mae_by_city.png"), dpi=150)
+    plt.show()
+    print("MAE plot saved to src/data/plot_mae_by_city.png")
 
 def save_model(model, features, path=os.path.join(DATA_DIR, "model.pkl")):
     os.makedirs(DATA_DIR, exist_ok=True)
@@ -99,5 +181,6 @@ if __name__ == "__main__":
     X_train, y_train, X_test, y_test, features = load_and_split()
     model = train_model(X_train, y_train)
     predictions = evaluate_model(model, X_test, y_test)
-    plot_predictions(model, X_test, y_test, features)
+    plot_residuals(model, X_test, y_test)
+    plot_mae_by_city(model, X_test, y_test)
     save_model(model, features)
