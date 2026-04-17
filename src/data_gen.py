@@ -21,7 +21,7 @@ CENTERS = {
     "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 38},
 }
 
-START_DATE = "2022-01-01"
+START_DATE = "2020-01-01"
 END_DATE   = "2023-12-31"
 
 def fetch_weather(lat, lon, start_date, end_date):

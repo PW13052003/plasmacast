@@ -20,8 +20,8 @@ def load_and_split(path=os.path.join(DATA_DIR, "donor_data_featured.csv")):
     ]
     target = "donor_count"
 
-    # Time based split — train on 2022, test on 2023
-    train = df[df["date"].dt.year == 2022]
+    # Time-based split — train on 2022, test on 2023
+    train = df[df["date"].dt.year < 2023]
     test = df[df["date"].dt.year == 2023]
 
     X_train = train[features]
