@@ -1,3 +1,18 @@
+# =============================================================================
+# Project:      PlasmaCast — Plasma Donor Demand Forecasting
+# Contributor:  Puranjay Wadhera (GitHub: @PW13052003)
+# File:         data_gen.py
+# Purpose:      Generates a synthetic donor dataset for 10 US plasma centers.
+#               Real historical weather data is fetched from the Open-Meteo API
+#               and combined with US federal holiday data and population-scaled
+#               donor baselines to produce realistic daily donor count estimates.
+# Language:     Python 3.12
+# Libraries:    requests, pandas, numpy, holidays, os
+# APIs:         Open-Meteo Historical Weather API (https://archive-api.open-meteo.com)
+# GitHub:       https://github.com/PW13052003/plasmacast/blob/main/src/data_gen.py
+# =============================================================================
+
+
 # Import the necessary modules
 import requests
 import pandas as pd
@@ -5,9 +20,14 @@ import numpy as np
 import holidays
 import os
 
+
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
-# Include the top 10 US Cities (based on the Vintage 2024 estimates) as the plasma centers
+
+# The 10 largest US cities by population, sourced from the US Census Bureau.
+# Vintage 2024 estimates (census.gov). Coordinates are sourced from the same dataset.
+# base_donors represents the average daily donor count, scaled proportionally to each city's population.
+# Philadelphia is the baseline reference city with 60 base donors per day.
 CENTERS = {
     "center_nyc":          {"city": "New York City", "lat": 40.66, "lon": -73.94, "base_donors": 318},
     "center_la":           {"city": "Los Angeles",   "lat": 34.02, "lon": -118.41, "base_donors": 145},
@@ -21,10 +41,27 @@ CENTERS = {
     "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 38},
 }
 
+
+# 4 years of data (2020-2023) give us a ~75/25 train/test split.
+# Data from 2020-2022 constitutes the training dataset and data from 2023 constitutes the testing dataset.
 START_DATE = "2020-01-01"
 END_DATE   = "2023-12-31"
 
+
 def fetch_weather(lat, lon, start_date, end_date):
+    """
+        Fetches real historical daily weather data from the Open-Meteo archive API.
+
+        Args:
+            lat (float): Latitude of the plasma center city.
+            lon (float): Longitude of the plasma center city.
+            start_date (str): Start date in YYYY-MM-DD format.
+            end_date (str): End date in YYYY-MM-DD format.
+
+        Returns:
+            pd.DataFrame: Daily weather data with columns:
+                          date, temp_max (°C), precipitation (mm).
+    """
     url = "https://archive-api.open-meteo.com/v1/archive"
     params = {
         "latitude": lat,
@@ -44,7 +81,21 @@ def fetch_weather(lat, lon, start_date, end_date):
     df["date"] = pd.to_datetime(df["date"])
     return df
 
+
 def calculate_donor_count(base_donors, temp, precipitation, day_of_week, is_holiday):
+    """
+        Calculates a synthetic daily donor count by applying real-world behavioral multipliers to a city's population-scaled baseline donor count.
+
+        Args:
+            base_donors (int): Population-scaled average donor count for the city.
+            temp (float): Max daily temperature in Celsius.
+            precipitation (float): Total daily precipitation in mm.
+            day_of_week (int): Day of week as integer (0=Monday, 6=Sunday).
+            is_holiday (bool): Whether the date is a US federal holiday.
+
+        Returns:
+            int: Simulated donor count for that day.
+    """
     count = base_donors
 
     # Day of week effect
@@ -57,6 +108,7 @@ def calculate_donor_count(base_donors, temp, precipitation, day_of_week, is_holi
         5: 0.75,  # Saturday
         6: 0.60,  # Sunday
     }
+
     count *= day_multipliers[day_of_week]
 
     # Weather effects
@@ -82,7 +134,21 @@ def calculate_donor_count(base_donors, temp, precipitation, day_of_week, is_holi
 
     return int(count)
 
+
 def generate_dataset():
+    """
+        Orchestrates the full data generation pipeline:-
+            1. Loops through all 10 plasma centers
+            2. Fetches real weather data for each city
+            3. Calculates synthetic donor counts for every day
+            4. Assembles and saves the final dataset as a CSV
+
+        Args:
+            NONE
+
+        Returns:
+            pd.DataFrame: The complete donor dataset.
+    """
     us_holidays = holidays.US()
     all_data = []
 
