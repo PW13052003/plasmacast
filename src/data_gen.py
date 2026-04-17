@@ -1,4 +1,4 @@
-# =============================================================================
+# =====================================================================================
 # Project:      PlasmaCast — Plasma Donor Demand Forecasting
 # Contributor:  Puranjay Wadhera (GitHub: @PW13052003)
 # File:         data_gen.py
@@ -10,7 +10,7 @@
 # Libraries:    requests, pandas, numpy, holidays, os
 # APIs:         Open-Meteo Historical Weather API (https://archive-api.open-meteo.com)
 # GitHub:       https://github.com/PW13052003/plasmacast/blob/main/src/data_gen.py
-# =============================================================================
+# =====================================================================================
 
 
 # Import the necessary modules
