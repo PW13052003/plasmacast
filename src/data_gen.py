@@ -7,13 +7,18 @@ import os
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
-# Define 5 plasma centers with real coordinates
+# Include the top 10 US Cities (based on the Vintage 2024 estimates) as the plasma centers
 CENTERS = {
-    "center_philly":  {"city": "Philadelphia", "lat": 39.9526, "lon": -75.1652, "base_donors": 60},
-    "center_nyc":     {"city": "New York City", "lat": 40.7128, "lon": -74.0060, "base_donors": 312},
-    "center_la":      {"city": "Los Angeles",   "lat": 34.0522, "lon": -118.2437, "base_donors": 146},
-    "center_chicago": {"city": "Chicago",       "lat": 41.8781, "lon": -87.6298, "base_donors": 101},
-    "center_houston": {"city": "Houston",       "lat": 29.7604, "lon": -95.3698, "base_donors": 86},
+    "center_nyc":          {"city": "New York City", "lat": 40.66, "lon": -73.94, "base_donors": 318},
+    "center_la":           {"city": "Los Angeles",   "lat": 34.02, "lon": -118.41, "base_donors": 145},
+    "center_chicago":      {"city": "Chicago",       "lat": 41.84, "lon": -87.68,  "base_donors": 102},
+    "center_houston":      {"city": "Houston",       "lat": 29.79, "lon": -95.39,  "base_donors": 90},
+    "center_phoenix":      {"city": "Phoenix",       "lat": 33.57, "lon": -112.09, "base_donors": 63},
+    "center_philly":       {"city": "Philadelphia",  "lat": 40.01, "lon": -75.13,  "base_donors": 60},
+    "center_san_antonio":  {"city": "San Antonio",   "lat": 29.46, "lon": -98.52,  "base_donors": 57},
+    "center_san_diego":    {"city": "San Diego",     "lat": 32.81, "lon": -117.14, "base_donors": 53},
+    "center_dallas":       {"city": "Dallas",        "lat": 32.79, "lon": -96.77,  "base_donors": 50},
+    "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 38},
 }
 
 START_DATE = "2022-01-01"
