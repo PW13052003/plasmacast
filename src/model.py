@@ -1,3 +1,20 @@
+# ================================================================================
+# Project:      PlasmaCast — Plasma Donor Demand Forecasting
+# Contributor:  Puranjay Wadhera (GitHub: @PW13052003)
+# File:         model.py
+# Purpose:      Trains an XGBoost regression model to predict daily plasma
+#               donor counts across 10 US cities. Evaluates model performance
+#               using MAE and RMSE, and generates two diagnostic visualizations:-
+#               a residual plot per city and a MAE percentage bar chart.
+# Language:     Python 3.12
+# Libraries:    pandas, numpy, xgboost, scikit-learn, matplotlib, joblib, os
+# Frameworks:   None
+# APIs:         None
+# GitHub:       https://github.com/PW13052003/plasmacast/blob/main/src/model.py
+# ================================================================================
+
+
+# Import the necessary modules
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
@@ -6,9 +23,30 @@ import matplotlib.pyplot as plt
 import joblib
 import os
 
+
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
+
 def load_and_split(path=os.path.join(DATA_DIR, "donor_data_featured.csv")):
+    """
+        Loads the featured donor dataset and splits it into training and test sets
+        using a time-based split — training on 2020-2022, testing on 2023.
+
+        A time-based split is used instead of a random split because this is a
+        time-series problem. A random split would allow future data to leak into
+        training, producing misleadingly optimistic accuracy metrics.
+
+        This gives us a ~75/25 split:
+            Training: 10,820 rows (2020-2022, 10 cities)
+            Testing:   3,650 rows (2023, 10 cities)
+
+        Args:
+            path (str): Path to the featured CSV dataset.
+
+        Returns:
+            X_train, y_train, X_test, y_test (pd.DataFrame/Series): Split datasets.
+            features (list): List of feature column names used for training.
+    """
     df = pd.read_csv(path)
     df["date"] = pd.to_datetime(df["date"])
 
@@ -36,6 +74,34 @@ def load_and_split(path=os.path.join(DATA_DIR, "donor_data_featured.csv")):
     return X_train, y_train, X_test, y_test, features
 
 def train_model(X_train, y_train):
+    """
+        Trains an XGBoost regression model on the training dataset.
+
+        XGBoost (Extreme Gradient Boosting) was chosen over alternatives like
+        ARIMA or LSTM because:
+            - It handles tabular data with mixed feature types very well
+            - It is robust to outliers and missing patterns
+            - It is highly interpretable via feature importance
+            - It does not require feature scaling
+            - It trains significantly faster than deep learning alternatives
+
+        Hyperparameter rationale:
+            n_estimators=500     — 500 trees gives a good balance of accuracy
+                                  and training speed
+            learning_rate=0.05   — conservative rate prevents overfitting
+            max_depth=6          — allows complex patterns without overfitting
+            subsample=0.8        — each tree sees 80% of rows, adds variety
+            colsample_bytree=0.8 — each tree sees 80% of features, adds variety
+            random_state=42      — ensures reproducible results every run
+            n_jobs=-1            — uses all available CPU cores for speed
+
+        Args:
+            X_train (pd.DataFrame): Training features.
+            y_train (pd.Series): Training target (donor counts).
+
+        Returns:
+            XGBRegressor: Trained XGBoost model.
+    """
     model = XGBRegressor(
         n_estimators=500,
         learning_rate=0.05,
@@ -50,6 +116,29 @@ def train_model(X_train, y_train):
     return model
 
 def evaluate_model(model, X_test, y_test):
+    """
+        Evaluates the trained model on the test set using two metrics:
+
+            MAE (Mean Absolute Error): Average number of donors the prediction
+            is off by per day. Simple and intuitive — directly interpretable
+            in the same units as the target variable.
+
+            RMSE (Root Mean Squared Error): Similar to MAE but penalizes large
+            errors more heavily. If RMSE is much higher than MAE, the model
+            has some days where it is significantly wrong.
+
+            MAE as % of mean: The most useful metric for cross-city comparison.
+            Normalizes MAE by the average donor count so performance can be
+            compared fairly across cities of very different sizes.
+
+        Args:
+            model (XGBRegressor): Trained XGBoost model.
+            X_test (pd.DataFrame): Test features.
+            y_test (pd.Series): Actual donor counts for test period.
+
+        Returns:
+            np.ndarray: Array of predicted donor counts.
+    """
     predictions = model.predict(X_test)
 
     mae = mean_absolute_error(y_test, predictions)
@@ -65,10 +154,19 @@ def evaluate_model(model, X_test, y_test):
 
 def plot_residuals(model, X_test, y_test):
     """
-    Generates a residual plot showing prediction error over time for each city.
-    Residual = Actual - Predicted. A well-performing model should show residuals
-    randomly scattered around zero with no systematic pattern.
-    Saved as: src/data/plot_residuals.png
+        Generates a 5x2 grid of residual plots, one per city, with a shared Y axis.
+
+        Residual = Actual - Predicted for each day.
+
+        Saved as: src/data/plot_residuals.png
+
+        Args:
+            model (XGBRegressor): Trained XGBoost model.
+            X_test (pd.DataFrame): Test features.
+            y_test (pd.Series): Actual donor counts for test period.
+
+        Returns:
+            NONE
     """
     predictions = model.predict(X_test)
 
@@ -102,12 +200,16 @@ def plot_residuals(model, X_test, y_test):
 
 def plot_mae_by_city(model, X_test, y_test):
     """
-    Generates a horizontal bar chart showing MAE per city as a percentage
-    of each city's average daily donor count. Using percentage rather than
-    absolute MAE allows fair comparison across cities of different sizes —
-    an MAE of 15 donors means very different things for NYC (318 avg donors)
-    vs Jacksonville (38 avg donors).
-    Saved as: src/data/plot_mae_by_city.png
+        Generates a horizontal bar chart showing MAE per city as a percentage
+        of each city's average daily donor count.
+
+        Args:
+            model (XGBRegressor): Trained XGBoost model.
+            X_test (pd.DataFrame): Test features.
+            y_test (pd.Series): Actual donor counts for test period.
+
+        Returns:
+            NONE
     """
     predictions = model.predict(X_test)
 
@@ -167,12 +269,37 @@ def plot_mae_by_city(model, X_test, y_test):
     print("MAE plot saved to src/data/plot_mae_by_city.png")
 
 def save_model(model, features, path=os.path.join(DATA_DIR, "model.pkl")):
+    """
+        Saves the trained model and feature list together as a single .pkl file
+        using joblib. Saving both together ensures api.py always loads a model
+        and its expected features in sync — preventing mismatches if features
+        are ever added or removed during future retraining.
+
+        Args:
+            model (XGBRegressor): Trained XGBoost model.
+            features (list): List of feature names the model was trained on.
+            path (str): Destination path for the saved model file.
+
+        Returns:
+            NONE
+    """
     os.makedirs(DATA_DIR, exist_ok=True)
     joblib.dump({"model": model, "features": features}, path)
     print(f"Model saved to {path}")
 
 
 def load_model(path=os.path.join(DATA_DIR, "model.pkl")):
+    """
+        Loads a previously saved model and its feature list from disk.
+        Used by api.py at startup to load the model without retraining.
+
+        Args:
+            path (str): Path to the saved .pkl model file.
+
+        Returns:
+            model (XGBRegressor): The loaded trained model.
+            features (list): The feature list the model expects.
+    """
     data = joblib.load(path)
     return data["model"], data["features"]
 
