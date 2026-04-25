@@ -8,3 +8,4 @@ jupyter
 fastapi
 uvicorn
 requests
+aiofiles

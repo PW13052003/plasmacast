@@ -24,10 +24,12 @@ import pandas as pd
 import numpy as np
 from datetime import date
 import os
-
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import pathlib
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-
+BASE = pathlib.Path(__file__).parent.parent
 
 def load_model(path=os.path.join(DATA_DIR, "model.pkl")):
     """
@@ -53,6 +55,12 @@ app = FastAPI(
     description="Donor demand forecasting API for plasma donation centers",
     version="1.0.0"
 )
+
+app.mount("/static", StaticFiles(directory=BASE / "dashboard"), name="static")
+
+@app.get("/")
+def serve_dashboard():
+    return FileResponse(BASE / "dashboard" / "dashboard.html")
 
 # Health check endpoint
 @app.get("/health")
