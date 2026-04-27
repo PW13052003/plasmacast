@@ -24,7 +24,9 @@ The dashboard provides:
 - 7-day donor demand forecast
 - City-level insights 
 - Model metrics & explainability
-- Dark/light mode 
+
+Link to dashboard (static version): https://pw13052003.github.io/plasmacast/
+
 
 ---
 
