@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PlasmaCast: Donor Demand Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root[data-theme="light"] {
+      --bg-primary:     #F0F2F5;
+      --bg-secondary:   #FFFFFF;
+      --bg-nav:         #FFFFFF;
+      --border:         #E2E8F0;
+      --text-primary:   #0F172A;
+      --text-secondary: #475569;
+      --text-muted:     #94A3B8;
+      --accent:         #0077BB;
+      --accent-hover:   #005E99;
+      --accent-light:   rgba(0, 119, 187, 0.08);
+      --high:           #0077BB;
+      --medium:         #EE7733;
+      --low:            #CC3311;
+      --nav-shadow:     0 2px 12px rgba(0,0,0,0.08);
+      --card-shadow:    0 1px 3px rgba(0,0,0,0.06);
+      --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.10);
+    }
+    :root[data-theme="dark"] {
+      --bg-primary:     #0D1117;
+      --bg-secondary:   #161B22;
+      --bg-nav:         #161B22;
+      --border:         #30363D;
+      --text-primary:   #E6EDF3;
+      --text-secondary: #8B949E;
+      --text-muted:     #484F58;
+      --accent:         #38BDF8;
+      --accent-hover:   #7DD3FC;
+      --accent-light:   rgba(56, 189, 248, 0.08);
+      --high:           #38BDF8;
+      --medium:         #EE7733;
+      --low:            #CC3311;
+      --nav-shadow:     0 2px 12px rgba(0,0,0,0.4);
+      --card-shadow:    0 1px 3px rgba(0,0,0,0.3);
+      --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    nav {
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--nav-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-brand {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--bg-primary);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .nav-link {
+      padding: 7px 18px;
+      border-radius: 7px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.15s ease;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--text-primary); background: var(--bg-secondary); }
+    .nav-link.active {
+      background: var(--bg-secondary);
+      color: var(--accent);
+      font-weight: 600;
+      box-shadow: var(--card-shadow);
+    }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--bg-primary);
+      transition: all 0.15s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .main { max-width: 1320px; margin: 0 auto; padding: 36px 32px; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 24px;
+    }
+    .page-title { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+    .page-subtitle { font-size: 0.875rem; color: var(--text-secondary); margin-top: 4px; }
+    .header-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+    .select-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .custom-select-wrap { position: relative; min-width: 220px; }
+    .custom-select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all 0.15s ease;
+      user-select: none;
+      box-shadow: var(--card-shadow);
+    }
+    .custom-select-trigger:hover,
+    .custom-select-trigger.open {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    .chevron { font-size: 0.7rem; color: var(--text-muted); transition: transform 0.2s ease; flex-shrink: 0; }
+    .chevron.open { transform: rotate(180deg); }
+    .custom-select-options {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0; right: 0;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow-hover);
+      z-index: 200;
+      overflow: hidden;
+      display: none;
+      animation: dropIn 0.15s ease;
+    }
+    .custom-select-options.open { display: block; }
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .custom-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.1s ease;
+      border-bottom: 1px solid var(--border);
+    }
+    .custom-option:last-child { border-bottom: none; }
+    .custom-option:hover { background: var(--bg-primary); color: var(--text-primary); }
+    .custom-option.selected { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      transition: box-shadow 0.2s ease;
+    }
+    .card:hover { box-shadow: var(--card-shadow-hover); }
+    .card-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .card-value { font-size: 2.2rem; font-weight: 700; color: var(--text-primary); line-height: 1; letter-spacing: -0.02em; }
+    .card-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 6px; }
+    .summary-card { padding: 20px 24px; }
+    .chart-card { padding: 28px; }
+    .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .chart-legend { display: flex; align-items: center; gap: 20px; }
+    .legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+    .legend-dot.high   { background: var(--high); }
+    .legend-dot.medium { background: var(--medium); }
+    .legend-dot.low    { background: var(--low); }
+    .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em; }
+    .badge-high   { background: rgba(0,119,187,0.12);  color: var(--high); }
+    .badge-medium { background: rgba(238,119,51,0.12); color: var(--medium); }
+    .badge-low    { background: rgba(204,51,17,0.12);  color: var(--low); }
+    .loading { display: flex; align-items: center; justify-content: center; padding: 80px; color: var(--text-muted); font-size: 0.875rem; }
+    .forecast-svg-wrap { width: 100%; overflow: visible; }
+    .forecast-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .forecast-table th { text-align: left; padding: 10px 12px; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); }
+    .forecast-table th:last-child, .forecast-table td:last-child { text-align: right; }
+    .forecast-table th:nth-child(3), .forecast-table td:nth-child(3) { text-align: right; }
+    .forecast-table td { padding: 13px 12px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+    .forecast-table tr:last-child td { border-bottom: none; }
+    .forecast-table tr.today-row td { background: var(--accent-light); font-weight: 600; }
+    .forecast-table tr:not(.today-row):hover td { background: var(--bg-primary); }
+    .mae-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .mae-city { width: 120px; font-size: 0.8rem; color: var(--text-secondary); text-align: right; flex-shrink: 0; font-weight: 500; }
+    .mae-bar-wrap { flex: 1; background: var(--bg-primary); border-radius: 6px; height: 28px; overflow: hidden; border: 1px solid var(--border); }
+    .mae-bar { height: 100%; border-radius: 6px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .mae-value { width: 48px; font-size: 0.8rem; font-weight: 700; color: var(--text-primary); flex-shrink: 0; }
+    .mae-overall-line { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-secondary); text-align: center; }
+    .metric-card { text-align: center; padding: 28px 20px; }
+    .metric-value { font-size: 2rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+    .metric-value.accent { color: var(--accent); }
+    .metric-label { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; }
+    .config-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    .config-row:last-child { border-bottom: none; }
+    .config-key { color: var(--text-secondary); }
+    .config-val { font-weight: 600; color: var(--text-primary); }
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .feature-tag { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
+    .feature-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .sources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .source-item { padding: 16px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; }
+    .source-title { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .source-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+    .explanation-text { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.8; }
+    .city-stats-card { margin-bottom: 20px; }
+    .static-notice {
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    @media (max-width: 900px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+      .sources-grid { grid-template-columns: 1fr; }
+      .nav-inner { padding: 0 16px; }
+      .main { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-brand">PLASMACAST : ML-Based Plasma Donor Forecasting System</div>
+      <div class="nav-links">
+        <button class="nav-link active" onclick="showPage('forecast', this)">Dashboard</button>
+        <button class="nav-link" onclick="showPage('insights', this)">Insights</button>
+        <button class="nav-link" onclick="showPage('metrics', this)">Model Metrics</button>
+      </div>
+      <div class="nav-right">
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- PAGE 1: DASHBOARD -->
+    <div id="page-forecast" class="page active">
+
+      <div class="static-notice">
+        ℹ️ This is a static demo — predictions are pre-computed. For live weather-integrated forecasts, run the full stack locally.
+        <a href="https://github.com/PW13052003/plasmacast" target="_blank" style="margin-left:auto;">View on GitHub →</a>
+      </div>
+
+      <div class="page-header">
+        <div>
+          <div class="page-title">Donor Demand Forecast</div>
+          <div class="page-subtitle">7-day predicted donor counts powered by XGBoost — updated daily</div>
+        </div>
+        <div class="header-controls">
+          <label class="select-label">Plasma Center</label>
+          <div class="custom-select-wrap" id="city-dropdown">
+            <div class="custom-select-trigger" onclick="toggleDropdown()">
+              <div class="trigger-left">
+                <span id="selected-label">Philadelphia</span>
+              </div>
+              <span class="chevron" id="chevron">▼</span>
+            </div>
+            <div class="custom-select-options" id="dropdown-options"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card city-stats-card" id="city-stats">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div class="card-title">Selected Center</div>
+            <div style="font-size:1.3rem; font-weight:700; color:var(--text-primary);" id="stats-city-name">Philadelphia</div>
+          </div>
+          <div style="display:flex; gap:32px; flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Population</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin-top:2px;" id="stats-population">--</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Avg Donors/Day</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--accent); margin-top:2px;" id="stats-base">--</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Model MAE</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin-top:2px;" id="stats-mae">--</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Region</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin-top:2px;" id="stats-region">--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="card summary-card">
+          <div class="card-title">Today's Forecast</div>
+          <div class="card-value" id="today-count">--</div>
+          <div class="card-sub" id="today-label">donors expected</div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-title">Busiest Day</div>
+          <div class="card-value" id="busiest-day">--</div>
+          <div class="card-sub" id="busiest-count">--</div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-title">Quietest Day</div>
+          <div class="card-value" id="quietest-day">--</div>
+          <div class="card-sub" id="quietest-count">--</div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-title">7-Day Total</div>
+          <div class="card-value" id="week-total">--</div>
+          <div class="card-sub">predicted donors this week</div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="card-title">7-Day Donor Forecast</div>
+            <div id="last-updated" style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;"></div>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="legend-dot high"></span>High demand</span>
+            <span class="legend-item"><span class="legend-dot medium"></span>Moderate demand</span>
+            <span class="legend-item"><span class="legend-dot low"></span>Low demand</span>
+          </div>
+        </div>
+        <div id="forecast-chart" class="loading">Loading forecast...</div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+          <div class="card-title">Daily Breakdown</div>
+        </div>
+        <div id="forecast-table"></div>
+      </div>
+    </div>
+
+    <!-- PAGE 2: INSIGHTS -->
+    <div id="page-insights" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Insights</div>
+          <div class="page-subtitle">Model accuracy and performance across all 10 plasma centers</div>
+        </div>
+      </div>
+      <div class="card chart-card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:24px;">Model Error by City — MAE as % of City Average</div>
+        <div id="mae-chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px;">What This Means</div>
+        <p class="explanation-text">
+          MAE (Mean Absolute Error) measures how many donors off our predictions are on average per day.
+          We show it as a percentage of each city's average donor count to make fair comparisons across
+          cities of very different sizes. An MAE of 15 donors means very different things for NYC (318 avg)
+          vs Jacksonville (38 avg) — so percentage normalizes for that difference.
+          The tight 5.4%–6.9% range across all 10 cities shows the model generalizes well regardless of city size.
+        </p>
+      </div>
+    </div>
+
+    <!-- PAGE 3: MODEL METRICS -->
+    <div id="page-metrics" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Model Metrics & Explainability</div>
+          <div class="page-subtitle">Technical details, performance metrics, and data sources</div>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-bottom:24px;">
+        <div class="card metric-card"><div class="metric-value accent">5.12</div><div class="metric-label">Mean Absolute Error (donors/day)</div></div>
+        <div class="card metric-card"><div class="metric-value accent">94.1%</div><div class="metric-label">Overall Prediction Accuracy</div></div>
+        <div class="card metric-card"><div class="metric-value accent">5.9%</div><div class="metric-label">MAE as % of Mean Donor Count</div></div>
+        <div class="card metric-card"><div class="metric-value">10,820</div><div class="metric-label">Training Rows (2020–2022)</div></div>
+        <div class="card metric-card"><div class="metric-value">3,650</div><div class="metric-label">Test Rows (2023)</div></div>
+        <div class="card metric-card"><div class="metric-value">75/25</div><div class="metric-label">Train/Test Split</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:16px;">Model Configuration</div>
+          <div id="model-config-table"></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:16px;">Features Used (13 total)</div>
+          <div id="features-list"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:24px;">
+        <div class="card-title" style="margin-bottom:16px;">Data Sources</div>
+        <div class="sources-grid">
+          <div class="source-item">
+            <div class="source-title">Weather Data</div>
+            <div class="source-desc">Open-Meteo Historical & Forecast API — free, no API key required.</div>
+            <a href="https://open-meteo.com" target="_blank">open-meteo.com →</a>
+          </div>
+          <div class="source-item">
+            <div class="source-title">Population Data</div>
+            <div class="source-desc">US Census Bureau Vintage 2024 estimates — used to scale donor baselines.</div>
+            <a href="https://census.gov" target="_blank">census.gov →</a>
+          </div>
+          <div class="source-item">
+            <div class="source-title">Holiday Calendar</div>
+            <div class="source-desc">Python holidays library — US federal holiday calendar for 2020–2023.</div>
+          </div>
+          <div class="source-item">
+            <div class="source-title">Donor Data</div>
+            <div class="source-desc">Synthetic — generated using real weather and holiday inputs with population-scaled baselines.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:24px;">
+        <div class="card-title" style="margin-bottom:16px;">About PlasmaCast</div>
+        <p class="explanation-text" style="margin-bottom:16px;">
+          PlasmaCast is an end-to-end machine learning system that forecasts daily plasma donor demand
+          across 10 major US cities. Built as a portfolio project inspired by the CSL Behring real-world
+          data challenge.
+        </p>
+        <p class="explanation-text">
+          Built by <strong>Puranjay Wadhera</strong> — Senior CS student. &nbsp;
+          <a href="https://github.com/PW13052003/plasmacast" target="_blank">GitHub Repository →</a>
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+  // =============================================
+  // CONSTANTS
+  // =============================================
+  const CITIES = {
+    center_philly:       { name: "Philadelphia",  base: 60  },
+    center_nyc:          { name: "New York City", base: 318 },
+    center_la:           { name: "Los Angeles",   base: 145 },
+    center_chicago:      { name: "Chicago",       base: 102 },
+    center_houston:      { name: "Houston",       base: 90  },
+    center_phoenix:      { name: "Phoenix",       base: 63  },
+    center_san_antonio:  { name: "San Antonio",   base: 57  },
+    center_san_diego:    { name: "San Diego",     base: 53  },
+    center_dallas:       { name: "Dallas",        base: 50  },
+    center_jacksonville: { name: "Jacksonville",  base: 38  },
+  };
+
+  const CITY_STATS = {
+    center_philly:       { population: "1,573,916", mae: "5.6%", region: "Northeast"  },
+    center_nyc:          { population: "8,478,072", mae: "5.5%", region: "Northeast"  },
+    center_la:           { population: "3,878,704", mae: "5.9%", region: "West Coast" },
+    center_chicago:      { population: "2,721,308", mae: "6.2%", region: "Midwest"    },
+    center_houston:      { population: "2,390,125", mae: "6.4%", region: "South"      },
+    center_phoenix:      { population: "1,673,164", mae: "6.4%", region: "Southwest"  },
+    center_san_antonio:  { population: "1,526,656", mae: "6.0%", region: "South"      },
+    center_san_diego:    { population: "1,404,452", mae: "5.4%", region: "West Coast" },
+    center_dallas:       { population: "1,326,087", mae: "6.9%", region: "South"      },
+    center_jacksonville: { population: "1,009,833", mae: "5.7%", region: "Southeast"  },
+  };
+
+  const MAE_DATA = [
+    { city: "Dallas",        mae: 6.9 },
+    { city: "Houston",       mae: 6.4 },
+    { city: "Phoenix",       mae: 6.4 },
+    { city: "Chicago",       mae: 6.2 },
+    { city: "San Antonio",   mae: 6.0 },
+    { city: "Los Angeles",   mae: 5.9 },
+    { city: "Jacksonville",  mae: 5.7 },
+    { city: "Philadelphia",  mae: 5.6 },
+    { city: "New York City", mae: 5.5 },
+    { city: "San Diego",     mae: 5.4 },
+  ];
+
+  const MODEL_CONFIG = [
+    ["Algorithm",        "XGBoost Regressor"],
+    ["Training Period",  "2020 – 2022 (3 years)"],
+    ["Test Period",      "2023 (1 year)"],
+    ["Train/Test Split", "75% / 25%"],
+    ["Training Rows",    "10,820"],
+    ["Test Rows",        "3,650"],
+    ["MAE",              "5.12 donors/day"],
+    ["RMSE",             "7.95 donors/day"],
+    ["MAE % of Mean",    "5.9%"],
+  ];
+
+  const FEATURES = [
+    { name: "temp_max",          color: "#0077BB" },
+    { name: "precipitation",     color: "#0077BB" },
+    { name: "day_of_week",       color: "#EE7733" },
+    { name: "is_holiday",        color: "#EE7733" },
+    { name: "month",             color: "#EE7733" },
+    { name: "year",              color: "#EE7733" },
+    { name: "day_of_year",       color: "#EE7733" },
+    { name: "is_weekend",        color: "#EE7733" },
+    { name: "season",            color: "#EE7733" },
+    { name: "donor_lag_7",       color: "#009988" },
+    { name: "donor_lag_14",      color: "#009988" },
+    { name: "rolling_7day_avg",  color: "#009988" },
+    { name: "rolling_14day_avg", color: "#009988" },
+  ];
+
+  // =============================================
+  // STATE
+  // =============================================
+  let selectedCity    = "center_philly";
+  let allPredictions  = {};
+
+  // =============================================
+  // THEME
+  // =============================================
+  function toggleTheme() {
+    const html  = document.documentElement;
+    const isDark = html.getAttribute("data-theme") === "dark";
+    html.setAttribute("data-theme", isDark ? "light" : "dark");
+    document.getElementById("theme-icon").textContent  = isDark ? "🌙" : "☀️";
+    document.getElementById("theme-label").textContent = isDark ? "Dark Mode" : "Light Mode";
+  }
+
+  // =============================================
+  // PAGE NAVIGATION
+  // =============================================
+  function showPage(page, btn) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".nav-link").forEach(b => b.classList.remove("active"));
+    document.getElementById("page-" + page).classList.add("active");
+    btn.classList.add("active");
+    if (page === "insights") renderInsights();
+    if (page === "metrics")  renderMetrics();
+  }
+
+  // =============================================
+  // HELPERS
+  // =============================================
+  function getDayName(date) {
+    return date.toLocaleDateString("en-US", { weekday: "short" });
+  }
+
+  function getDateLabel(date) {
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  }
+
+  function getDonorLevel(count, base) {
+    const ratio = count / base;
+    if (ratio >= 0.95) return "high";
+    if (ratio >= 0.75) return "medium";
+    return "low";
+  }
+
+  function getLevelColor(level) {
+    if (level === "high")   return "#0077BB";
+    if (level === "medium") return "#EE7733";
+    return "#CC3311";
+  }
+
+  function animateCounter(elementId, targetValue, duration = 800) {
+    const element = document.getElementById(elementId);
+    const start   = performance.now();
+    function update(currentTime) {
+      const elapsed  = currentTime - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased    = 1 - Math.pow(1 - progress, 3);
+      element.textContent = Math.round(eased * targetValue).toLocaleString();
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // =============================================
+  // DROPDOWN
+  // =============================================
+  function buildDropdown() {
+    const container = document.getElementById("dropdown-options");
+    container.innerHTML = Object.entries(CITIES).map(([id, city]) => `
+      <div class="custom-option ${id === selectedCity ? "selected" : ""}"
+           onclick="selectCity('${id}')">
+        ${city.name}
+      </div>`).join("");
+  }
+
+  function toggleDropdown() {
+    const options = document.getElementById("dropdown-options");
+    const trigger = document.querySelector(".custom-select-trigger");
+    const chevron = document.getElementById("chevron");
+    const isOpen  = options.classList.contains("open");
+    options.classList.toggle("open", !isOpen);
+    trigger.classList.toggle("open", !isOpen);
+    chevron.classList.toggle("open",  !isOpen);
+  }
+
+  function selectCity(centerId) {
+    selectedCity = centerId;
+    document.getElementById("selected-label").textContent = CITIES[centerId].name;
+    document.getElementById("dropdown-options").classList.remove("open");
+    document.querySelector(".custom-select-trigger").classList.remove("open");
+    document.getElementById("chevron").classList.remove("open");
+    buildDropdown();
+    updateCityStats(centerId);
+    loadForecast();
+  }
+
+  document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("city-dropdown");
+    if (dropdown && !dropdown.contains(e.target)) {
+      document.getElementById("dropdown-options").classList.remove("open");
+      const trigger = document.querySelector(".custom-select-trigger");
+      if (trigger) trigger.classList.remove("open");
+      const chevron = document.getElementById("chevron");
+      if (chevron) chevron.classList.remove("open");
+    }
+  });
+
+  // =============================================
+  // CITY STATS
+  // =============================================
+  function updateCityStats(centerId) {
+    const city  = CITIES[centerId];
+    const stats = CITY_STATS[centerId];
+    document.getElementById("stats-city-name").textContent  = city.name;
+    document.getElementById("stats-population").textContent = stats.population;
+    document.getElementById("stats-base").textContent       = `${city.base} donors`;
+    document.getElementById("stats-mae").textContent        = stats.mae;
+    document.getElementById("stats-region").textContent     = stats.region;
+  }
+
+  // =============================================
+  // LOAD FORECAST — from pre-computed JSON
+  // =============================================
+  async function loadForecast() {
+    const centerId = selectedCity;
+    const city     = CITIES[centerId];
+
+    document.getElementById("forecast-chart").innerHTML =
+      '<div class="loading">Loading forecast...</div>';
+    document.getElementById("today-count").textContent  = "--";
+    document.getElementById("week-total").textContent   = "--";
+    document.getElementById("busiest-day").textContent  = "--";
+    document.getElementById("quietest-day").textContent = "--";
+
+    // Load pre-computed predictions
+    if (!Object.keys(allPredictions).length) {
+      try {
+        const res      = await fetch("predictions.json");
+        allPredictions = await res.json();
+      } catch {
+        document.getElementById("forecast-chart").innerHTML =
+          '<div class="loading">Could not load predictions.</div>';
+        return;
+      }
+    }
+
+    const data = allPredictions[centerId] || [];
+    const forecasts = data.slice(0, 7).map((d) => {
+      const date = new Date(d.date + "T12:00:00");
+      return {
+        day:           getDayName(date),
+        date:          getDateLabel(date),
+        count:         d.predicted_donors,
+        level:         getDonorLevel(d.predicted_donors, city.base),
+        temp:          "--",
+        precipitation: 0,
+      };
+    });
+
+    renderForecast(forecasts, city);
+  }
+
+  // =============================================
+  // RENDER FORECAST
+  // =============================================
+  function renderForecast(forecasts, city) {
+    const counts = forecasts.map(f => f.count);
+    const maxIdx = counts.indexOf(Math.max(...counts));
+    const minIdx = counts.indexOf(Math.min(...counts));
+    const total  = counts.reduce((a, b) => a + b, 0);
+    const maxVal = Math.max(...counts);
+
+    // Last updated
+    const now = new Date();
+    document.getElementById("last-updated").textContent =
+      `Last updated: ${now.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+
+    // Summary cards
+    animateCounter("today-count", forecasts[0].count);
+    document.getElementById("today-label").textContent    = `donors expected — ${forecasts[0].day} ${forecasts[0].date}`;
+    document.getElementById("busiest-day").textContent    = forecasts[maxIdx].day;
+    document.getElementById("busiest-count").textContent  = `${forecasts[maxIdx].count} donors — ${forecasts[maxIdx].date}`;
+    document.getElementById("quietest-day").textContent   = forecasts[minIdx].day;
+    document.getElementById("quietest-count").textContent = `${forecasts[minIdx].count} donors — ${forecasts[minIdx].date}`;
+    animateCounter("week-total", total);
+
+    // SVG Chart
+    const W = 900, H = 300;
+    const padL = 55, padR = 24, padT = 24, padB = 64;
+    const chartW = W - padL - padR;
+    const chartH = H - padT - padB;
+    const yMax   = Math.ceil((maxVal * 1.2) / 10) * 10;
+    const yMin   = 0;
+    const yTicks = 5;
+    const yStep  = Math.ceil(yMax / yTicks / 10) * 10;
+    const barGroupW = chartW / forecasts.length;
+    const barW      = barGroupW * 0.52;
+
+    function yPos(val) { return padT + chartH - ((val - yMin) / (yMax - yMin)) * chartH; }
+    function xPos(i)   { return padL + i * barGroupW + barGroupW / 2; }
+
+    let gridLines = "", yLabels = "", bars = "", xLabels = "";
+    for (let t = 0; t <= yTicks; t++) {
+      const val = t * yStep;
+      if (val > yMax + yStep) break;
+      const y = yPos(val);
+      gridLines += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="var(--border)" stroke-width="1" stroke-dasharray="${t === 0 ? "none" : "4,4"}"/>`;
+      yLabels   += `<text x="${padL - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="var(--text-muted)" font-family="Inter, sans-serif">${val}</text>`;
+    }
+
+    forecasts.forEach((f, i) => {
+      const x       = xPos(i);
+      const bh      = Math.max(((f.count - yMin) / (yMax - yMin)) * chartH, 4);
+      const by      = padT + chartH - bh;
+      const col     = getLevelColor(f.level);
+      const isToday = i === 0;
+      bars += `
+        <g style="cursor:pointer;">
+          <rect x="${x - barW/2}" y="${by}" width="${barW}" height="${bh}" fill="${col}" rx="6"
+            opacity="${isToday ? 1 : 0.80}" style="transition:opacity 0.2s;"
+            onmouseover="this.setAttribute('opacity','1')"
+            onmouseout="this.setAttribute('opacity','${isToday ? 1 : 0.80}')">
+            <title>${f.day} ${f.date}: ${f.count} donors</title>
+          </rect>
+          <text x="${x}" y="${by - 7}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-primary)" font-family="Inter, sans-serif">${f.count}</text>
+          ${isToday ? `<rect x="${x - barW/2 - 3}" y="${by - 3}" width="${barW + 6}" height="${bh + 3}" fill="none" stroke="${col}" stroke-width="2" rx="7" opacity="0.35"/>` : ""}
+        </g>`;
+      xLabels += `
+        <text x="${x}" y="${H - padB + 18}" text-anchor="middle" font-size="12" font-weight="${isToday ? 700 : 500}" fill="${isToday ? "var(--accent)" : "var(--text-secondary)"}" font-family="Inter, sans-serif">${f.day}</text>
+        <text x="${x}" y="${H - padB + 34}" text-anchor="middle" font-size="10" fill="var(--text-muted)" font-family="Inter, sans-serif">${f.date}</text>`;
+    });
+
+    document.getElementById("forecast-chart").innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" class="forecast-svg-wrap" style="width:100%; height:auto; display:block;">
+        <text x="14" y="${padT + chartH/2}" text-anchor="middle" font-size="11" fill="var(--text-muted)" font-family="Inter, sans-serif" transform="rotate(-90, 14, ${padT + chartH/2})">Donors</text>
+        ${gridLines}${yLabels}${bars}${xLabels}
+        <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + chartH}" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="${padL}" y1="${padT + chartH}" x2="${W - padR}" y2="${padT + chartH}" stroke="var(--border)" stroke-width="1.5"/>
+      </svg>`;
+
+    // Table
+    document.getElementById("forecast-table").innerHTML = `
+      <table class="forecast-table">
+        <thead><tr><th>Day</th><th>Date</th><th>Predicted Donors</th><th>Demand Level</th></tr></thead>
+        <tbody>
+          ${forecasts.map((f, i) => `
+            <tr class="${i === 0 ? "today-row" : ""}">
+              <td>${i === 0 ? "📍 Today" : f.day}</td>
+              <td style="color:var(--text-secondary);">${f.date}</td>
+              <td style="text-align:right; font-weight:600;">${f.count}</td>
+              <td style="text-align:right;"><span class="badge badge-${f.level}">${f.level.charAt(0).toUpperCase() + f.level.slice(1)}</span></td>
+            </tr>`).join("")}
+        </tbody>
+      </table>`;
+  }
+
+  // =============================================
+  // RENDER INSIGHTS
+  // =============================================
+  function renderInsights() {
+    const maxMae = Math.max(...MAE_DATA.map(d => d.mae));
+    document.getElementById("mae-chart").innerHTML =
+      MAE_DATA.map(d => `
+        <div class="mae-row">
+          <div class="mae-city">${d.city}</div>
+          <div class="mae-bar-wrap">
+            <div class="mae-bar" style="width:${(d.mae/maxMae*100).toFixed(1)}%; background:#0077BB; opacity:0.75;"></div>
+          </div>
+          <div class="mae-value">${d.mae}%</div>
+        </div>`).join("") +
+      `<div class="mae-overall-line">Overall model MAE: <strong style="color:var(--accent);">5.9%</strong> of average daily donor count</div>`;
+  }
+
+  // =============================================
+  // RENDER METRICS
+  // =============================================
+  function renderMetrics() {
+    document.getElementById("model-config-table").innerHTML =
+      MODEL_CONFIG.map(([k, v]) => `
+        <div class="config-row">
+          <span class="config-key">${k}</span>
+          <span class="config-val">${v}</span>
+        </div>`).join("");
+
+    document.getElementById("features-list").innerHTML = `
+      <div class="features-grid">
+        ${FEATURES.map(f => `
+          <div class="feature-tag">
+            <span class="feature-dot" style="background:${f.color};"></span>
+            ${f.name}
+          </div>`).join("")}
+      </div>
+      <div style="margin-top:14px; display:flex; gap:16px; flex-wrap:wrap;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#0077BB;display:inline-block;"></span>Weather</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#EE7733;display:inline-block;"></span>Calendar</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#009988;display:inline-block;"></span>Lag & Rolling</span>
+      </div>`;
+  }
+
+  // =============================================
+  // INIT
+  // =============================================
+  buildDropdown();
+  updateCityStats(selectedCity);
+  loadForecast();
+  </script>
+</body>
+</html>
