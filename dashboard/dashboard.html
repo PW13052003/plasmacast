@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PlasmaCast: Donor Demand Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/dashboard.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-brand">PLASMACAST : ML-Based Plasma Donor Forecasting System</div>
+      <div class="nav-links">
+        <button class="nav-link active" onclick="showPage('forecast', this)">Dashboard</button>
+        <button class="nav-link" onclick="showPage('insights', this)">Insights</button>
+        <button class="nav-link" onclick="showPage('metrics', this)">Model Metrics</button>
+      </div>
+      <div class="nav-right">
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- PAGE 1: DASHBOARD -->
+    <div id="page-forecast" class="page active">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Donor Demand Forecast</div>
+          <div class="page-subtitle">7-day predicted donor counts - Updated Daily</div>
+        </div>
+        <div class="header-controls">
+          <label class="select-label">Plasma Center</label>
+          <div class="custom-select-wrap" id="city-dropdown">
+            <div class="custom-select-trigger" onclick="toggleDropdown()">
+              <div class="trigger-left">
+                <span id="selected-label">Philadelphia</span>
+              </div>
+              <span class="chevron" id="chevron">▼</span>
+            </div>
+            <div class="custom-select-options" id="dropdown-options"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="grid-4">
+        <div class="card summary-card">
+          <div class="card-title">Today's Forecast</div>
+          <div class="card-value" id="today-count">--</div>
+          <div class="card-sub" id="today-label">donors expected</div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-title">Busiest Day</div>
+          <div class="card-value" id="busiest-day">--</div>
+          <div class="card-sub" id="busiest-count">--</div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-title">Quietest Day</div>
+          <div class="card-value" id="quietest-day">--</div>
+          <div class="card-sub" id="quietest-count">--</div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-title">7-Day Total</div>
+          <div class="card-value" id="week-total">--</div>
+          <div class="card-sub">predicted donors this week</div>
+        </div>
+      </div>
+
+
+      <!-- City Stats Card -->
+      <div class="card city-stats-card" id="city-stats" style="margin-bottom:20px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div class="card-title">Selected Center</div>
+            <div style="font-size:1.3rem; font-weight:700; color:var(--text-primary);" id="stats-city-name">Philadelphia</div>
+          </div>
+          <div style="display:flex; gap:32px; flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Population</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin-top:2px;" id="stats-population">--</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Avg Donors/Day</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--accent); margin-top:2px;" id="stats-base">--</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Model MAE</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin-top:2px;" id="stats-mae">--</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Region</div>
+              <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin-top:2px;" id="stats-region">--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forecast Chart -->
+      <div class="card chart-card">
+        <div class="chart-header">
+        <div>
+          <div class="card-title">7-Day Donor Forecast</div>
+          <div id="last-updated" style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;"></div>
+        </div>
+        <div class="chart-legend">
+<!--        <div class="chart-header">-->
+<!--          <div class="card-title">7-Day Donor Forecast</div>-->
+<!--          <div class="chart-legend">-->
+            <span class="legend-item"><span class="legend-dot high"></span>High demand</span>
+            <span class="legend-item"><span class="legend-dot medium"></span>Moderate demand</span>
+            <span class="legend-item"><span class="legend-dot low"></span>Low demand</span>
+          </div>
+        </div>
+        <div id="forecast-chart" class="loading">Loading forecast...</div>
+      </div>
+
+      <!-- Daily Breakdown Table -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px;">Daily Breakdown</div>
+        <div id="forecast-table"></div>
+      </div>
+    </div>
+
+    <!-- PAGE 2: INSIGHTS -->
+    <div id="page-insights" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Insights</div>
+          <div class="page-subtitle">Model accuracy and performance across all 10 plasma centers</div>
+        </div>
+      </div>
+      <div class="card chart-card" style="margin-bottom:24px;">
+        <div class="card-title" style="margin-bottom:24px;">Model Error by City — MAE as % of City Average</div>
+        <div id="mae-chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px;">What This Means</div>
+        <p class="explanation-text">
+          MAE (Mean Absolute Error) measures how many donors off our predictions are on average per day.
+          We show it as a percentage of each city's average donor count to make fair comparisons across
+          cities of very different sizes. An MAE of 15 donors means very different things for NYC (318 avg)
+          vs Jacksonville (38 avg) — so percentage normalizes for that difference.
+          The tight 5.4%–6.9% range across all 10 cities shows the model generalizes well regardless of city size.
+        </p>
+      </div>
+    </div>
+
+    <!-- PAGE 3: MODEL METRICS -->
+    <div id="page-metrics" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Model Metrics & Explainability</div>
+          <div class="page-subtitle">Technical details, performance metrics, and data sources</div>
+        </div>
+      </div>
+
+      <!-- Metric Cards -->
+      <div class="grid-3" style="margin-bottom:24px;">
+        <div class="card metric-card">
+          <div class="metric-value accent">5.12</div>
+          <div class="metric-label">Mean Absolute Error (donors/day)</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-value accent">94.1%</div>
+          <div class="metric-label">Overall Prediction Accuracy</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-value accent">5.9%</div>
+          <div class="metric-label">MAE as % of Mean Donor Count</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-value">10,820</div>
+          <div class="metric-label">Training Rows (2020–2022)</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-value">3,650</div>
+          <div class="metric-label">Test Rows (2023)</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-value">75/25</div>
+          <div class="metric-label">Train/Test Split</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:16px;">Model Configuration</div>
+          <div id="model-config-table"></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:16px;">Features Used (13 total)</div>
+          <div id="features-list"></div>
+        </div>
+      </div>
+
+      <!-- Data Sources -->
+      <div class="card" style="margin-top:24px;">
+        <div class="card-title" style="margin-bottom:16px;">Data Sources</div>
+        <div class="sources-grid">
+          <div class="source-item">
+            <div class="source-title">Weather Data</div>
+            <div class="source-desc">Open-Meteo Historical & Forecast API: Free, no API key required. Provides daily max temperature and precipitation for all 10 cities from 2020 to present.</div>
+            <a href="https://open-meteo.com" target="_blank">open-meteo.com →</a>
+          </div>
+          <div class="source-item">
+            <div class="source-title">Population Data</div>
+            <div class="source-desc">US Census Bureau Vintage 2024 estimates: Used to scale baseline donor counts proportionally across cities. Philadelphia (1,573,916) used as reference baseline.</div>
+            <a href="https://census.gov" target="_blank">census.gov →</a>
+          </div>
+          <div class="source-item">
+            <div class="source-title">Holiday Calendar</div>
+            <div class="source-desc">Python holidays library — US federal holiday calendar for 2020–2023. Holidays reduce predicted donor counts by approximately 48% based on observed patterns.</div>
+          </div>
+          <div class="source-item">
+            <div class="source-title">Donor Data</div>
+            <div class="source-desc">Synthetic: Generated using real weather and holiday inputs with population-scaled baselines.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="card" style="margin-top:24px;">
+        <div class="card-title" style="margin-bottom:16px;">About PlasmaCast</div>
+        <p class="explanation-text" style="margin-bottom:16px;">
+          PlasmaCast is an end-to-end machine learning system that forecasts daily plasma donor demand
+          across 10 major US cities.
+        </p>
+        <p class="explanation-text">
+          Built by <strong>Puranjay Wadhera</strong> — Senior CS student. &nbsp;
+          <a href="https://github.com/PW13052003/plasmacast" target="_blank">GitHub Repository →</a>
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+<!--  <script src="/static/dashboard.js"></script>-->
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>
