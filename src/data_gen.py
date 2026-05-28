@@ -29,16 +29,16 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 # base_donors represents the average daily donor count, scaled proportionally to each city's population.
 # Philadelphia is the baseline reference city with 60 base donors per day.
 CENTERS = {
-    "center_nyc":          {"city": "New York City", "lat": 40.66, "lon": -73.94, "base_donors": 318},
-    "center_la":           {"city": "Los Angeles",   "lat": 34.02, "lon": -118.41, "base_donors": 145},
-    "center_chicago":      {"city": "Chicago",       "lat": 41.84, "lon": -87.68,  "base_donors": 102},
-    "center_houston":      {"city": "Houston",       "lat": 29.79, "lon": -95.39,  "base_donors": 90},
-    "center_phoenix":      {"city": "Phoenix",       "lat": 33.57, "lon": -112.09, "base_donors": 63},
-    "center_philly":       {"city": "Philadelphia",  "lat": 40.01, "lon": -75.13,  "base_donors": 60},
-    "center_san_antonio":  {"city": "San Antonio",   "lat": 29.46, "lon": -98.52,  "base_donors": 57},
-    "center_san_diego":    {"city": "San Diego",     "lat": 32.81, "lon": -117.14, "base_donors": 53},
-    "center_dallas":       {"city": "Dallas",        "lat": 32.79, "lon": -96.77,  "base_donors": 50},
-    "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 38},
+    "center_nyc":          {"city": "New York City", "lat": 40.66, "lon": -73.94, "base_donors": 5103},
+    "center_la":           {"city": "Los Angeles",   "lat": 34.02, "lon": -118.41, "base_donors": 2361},
+    "center_chicago":      {"city": "Chicago",       "lat": 41.84, "lon": -87.68,  "base_donors": 1647},
+    "center_houston":      {"city": "Houston",       "lat": 29.79, "lon": -95.39,  "base_donors": 1430},
+    "center_phoenix":      {"city": "Phoenix",       "lat": 33.57, "lon": -112.09, "base_donors": 1020},
+    "center_philly":       {"city": "Philadelphia",  "lat": 40.01, "lon": -75.13,  "base_donors": 958},
+    "center_san_antonio":  {"city": "San Antonio",   "lat": 29.46, "lon": -98.52,  "base_donors": 924},
+    "center_san_diego":    {"city": "San Diego",     "lat": 32.81, "lon": -117.14, "base_donors": 858},
+    "center_dallas":       {"city": "Dallas",        "lat": 32.79, "lon": -96.77,  "base_donors": 805},
+    "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 609},
 }
 
 
