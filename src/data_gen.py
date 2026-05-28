@@ -24,21 +24,40 @@ import os
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
-# The 10 largest US cities by population, sourced from the US Census Bureau.
-# Vintage 2024 estimates (census.gov). Coordinates are sourced from the same dataset.
-# base_donors represents the average daily donor count, scaled proportionally to each city's population.
-# Philadelphia is the baseline reference city with 60 base donors per day.
+# The 10 largest US cities by population, sourced from the U.S. Census Bureau
+# (Vintage 2024 estimates). Coordinates are city-center lat/lon pairs.
+#
+# Baseline donor count methodology:
+# ---------------------------------
+# Each city's base_donors value represents the city-aggregate average daily
+# plasma donor count, derived from publicly available industry statistics rather
+# than from per-center observation (which is not publicly available).
+#
+# The derivation uses figures published by the Plasma Protein Therapeutics
+# Association (PPTA):
+#   - ~1,200 PPTA member plasma collection centers in North America
+#   - ~63,000 collections per center per year (PPTA average)
+#   = ~75.6 million collections per year nationwide
+#   ÷ 365 days ÷ ~335 million US population
+#   = ~0.000618 donors per person per day
+#
+# Each city's baseline is then computed as:
+#   base_donors = round(city_population * 0.000618)
+#
+# Limitation: this assumes uniform per-capita donation rates across cities,
+# which in reality vary due to non-uniform distribution of plasma collection
+# centers (centers concentrate in lower-income urban tracts).
 CENTERS = {
-    "center_nyc":          {"city": "New York City", "lat": 40.66, "lon": -73.94, "base_donors": 5103},
-    "center_la":           {"city": "Los Angeles",   "lat": 34.02, "lon": -118.41, "base_donors": 2361},
-    "center_chicago":      {"city": "Chicago",       "lat": 41.84, "lon": -87.68,  "base_donors": 1647},
-    "center_houston":      {"city": "Houston",       "lat": 29.79, "lon": -95.39,  "base_donors": 1430},
-    "center_phoenix":      {"city": "Phoenix",       "lat": 33.57, "lon": -112.09, "base_donors": 1020},
-    "center_philly":       {"city": "Philadelphia",  "lat": 40.01, "lon": -75.13,  "base_donors": 958},
-    "center_san_antonio":  {"city": "San Antonio",   "lat": 29.46, "lon": -98.52,  "base_donors": 924},
-    "center_san_diego":    {"city": "San Diego",     "lat": 32.81, "lon": -117.14, "base_donors": 858},
-    "center_dallas":       {"city": "Dallas",        "lat": 32.79, "lon": -96.77,  "base_donors": 805},
-    "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 609},
+    "center_nyc":          {"city": "New York City", "lat": 40.66, "lon": -73.94,  "base_donors": 5239},
+    "center_la":           {"city": "Los Angeles",   "lat": 34.02, "lon": -118.41, "base_donors": 2397},
+    "center_chicago":      {"city": "Chicago",       "lat": 41.84, "lon": -87.68,  "base_donors": 1682},
+    "center_houston":      {"city": "Houston",       "lat": 29.79, "lon": -95.39,  "base_donors": 1477},
+    "center_phoenix":      {"city": "Phoenix",       "lat": 33.57, "lon": -112.09, "base_donors": 1034},
+    "center_philly":       {"city": "Philadelphia",  "lat": 40.01, "lon": -75.13,  "base_donors": 973},
+    "center_san_antonio":  {"city": "San Antonio",   "lat": 29.46, "lon": -98.52,  "base_donors": 943},
+    "center_san_diego":    {"city": "San Diego",     "lat": 32.81, "lon": -117.14, "base_donors": 868},
+    "center_dallas":       {"city": "Dallas",        "lat": 32.79, "lon": -96.77,  "base_donors": 820},
+    "center_jacksonville": {"city": "Jacksonville",  "lat": 30.34, "lon": -81.66,  "base_donors": 624},
 }
 
 

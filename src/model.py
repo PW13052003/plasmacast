@@ -187,7 +187,7 @@ def plot_residuals(model, X_test, y_test):
         city_df = test_df[test_df["city"] == city].reset_index(drop=True)
         axes[i].plot(city_df["residual"], color=colors[i], alpha=0.7, linewidth=0.8)
         axes[i].axhline(y=0, color="black", linestyle="--", linewidth=1)
-        axes[i].set_ylim(-70, 70)
+        axes[i].set_ylim(-200, 200)
         axes[i].set_title(city, fontsize=11)
         axes[i].set_ylabel("Residual (donors)")
 

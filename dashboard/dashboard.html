@@ -147,9 +147,8 @@
         <p class="explanation-text">
           MAE (Mean Absolute Error) measures how many donors off our predictions are on average per day.
           We show it as a percentage of each city's average donor count to make fair comparisons across
-          cities of very different sizes. An MAE of 15 donors means very different things for NYC (318 avg)
-          vs Jacksonville (38 avg) — so percentage normalizes for that difference.
-          The tight 5.4%–6.9% range across all 10 cities shows the model generalizes well regardless of city size.
+          cities of very different sizes. An MAE of 100 donors means very different things for NYC (~5,239 avg) vs Jacksonville (~624 avg), so percentage normalizes for that difference.
+          The tight 5.3%–6.5% range across all 10 cities shows the model generalizes well regardless of city size.
         </p>
       </div>
     </div>
@@ -166,15 +165,15 @@
       <!-- Metric Cards -->
       <div class="grid-3" style="margin-bottom:24px;">
         <div class="card metric-card">
-          <div class="metric-value accent">5.12</div>
+          <div class="metric-value accent">84.01</div>
           <div class="metric-label">Mean Absolute Error (donors/day)</div>
         </div>
         <div class="card metric-card">
-          <div class="metric-value accent">94.1%</div>
+          <div class="metric-value accent">94.0%</div>
           <div class="metric-label">Overall Prediction Accuracy</div>
         </div>
         <div class="card metric-card">
-          <div class="metric-value accent">5.9%</div>
+          <div class="metric-value accent">6.0%</div>
           <div class="metric-label">MAE as % of Mean Donor Count</div>
         </div>
         <div class="card metric-card">
@@ -213,12 +212,12 @@
           </div>
           <div class="source-item">
             <div class="source-title">Population Data</div>
-            <div class="source-desc">US Census Bureau Vintage 2024 estimates: Used to scale baseline donor counts proportionally across cities. Philadelphia (1,573,916) used as reference baseline.</div>
-            <a href="https://census.gov" target="_blank">census.gov →</a>
+              <div class="source-desc">US Census Bureau Vintage 2024 estimates. Combined with the PPTA-published average of ~63,000 collections per center per year across ~1,200 North American centers to derive a per-capita daily donation rate (~0.000618 donors/person/day). City baselines are computed as population × this rate.</div>
+              <a href="https://census.gov" target="_blank">census.gov →</a>
           </div>
           <div class="source-item">
             <div class="source-title">Holiday Calendar</div>
-            <div class="source-desc">Python holidays library — US federal holiday calendar for 2020–2023. Holidays reduce predicted donor counts by approximately 48% based on observed patterns.</div>
+            <div class="source-desc">Python holidays library — US federal holiday calendar for 2020–2023. Holidays reduce predicted donor counts by approximately 50% based on observed patterns.</div>
           </div>
           <div class="source-item">
             <div class="source-title">Donor Data</div>
@@ -243,7 +242,6 @@
 
   </main>
 
-<!--  <script src="/static/dashboard.js"></script>-->
     <script src="/static/dashboard.js"></script>
 </body>
 </html>
