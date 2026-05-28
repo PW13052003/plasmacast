@@ -2,29 +2,29 @@
 // CONSTANTS
 // =============================================
 const CITIES = {
-  center_philly:       { name: "Philadelphia",  base: 60  },
-  center_nyc:          { name: "New York City", base: 318 },
-  center_la:           { name: "Los Angeles",   base: 145 },
-  center_chicago:      { name: "Chicago",       base: 102 },
-  center_houston:      { name: "Houston",       base: 90  },
-  center_phoenix:      { name: "Phoenix",       base: 63  },
-  center_san_antonio:  { name: "San Antonio",   base: 57  },
-  center_san_diego:    { name: "San Diego",     base: 53  },
-  center_dallas:       { name: "Dallas",        base: 50  },
-  center_jacksonville: { name: "Jacksonville",  base: 38  },
+  center_philly:       { name: "Philadelphia",  base: 958  },
+  center_nyc:          { name: "New York City", base: 5103 },
+  center_la:           { name: "Los Angeles",   base: 2361 },
+  center_chicago:      { name: "Chicago",       base: 1647 },
+  center_houston:      { name: "Houston",       base: 1430 },
+  center_phoenix:      { name: "Phoenix",       base: 1020 },
+  center_san_antonio:  { name: "San Antonio",   base: 924  },
+  center_san_diego:    { name: "San Diego",     base: 858  },
+  center_dallas:       { name: "Dallas",        base: 805  },
+  center_jacksonville: { name: "Jacksonville",  base: 609  },
 };
 
 const CITY_STATS = {
-  center_philly:       { population: "1,573,916", mae: "5.6%", region: "Northeast"  },
-  center_nyc:          { population: "8,478,072", mae: "5.5%", region: "Northeast"  },
-  center_la:           { population: "3,878,704", mae: "5.9%", region: "West Coast" },
-  center_chicago:      { population: "2,721,308", mae: "6.2%", region: "Midwest"    },
-  center_houston:      { population: "2,390,125", mae: "6.4%", region: "South"      },
-  center_phoenix:      { population: "1,673,164", mae: "6.4%", region: "Southwest"  },
-  center_san_antonio:  { population: "1,526,656", mae: "6.0%", region: "South"      },
-  center_san_diego:    { population: "1,404,452", mae: "5.4%", region: "West Coast" },
-  center_dallas:       { population: "1,326,087", mae: "6.9%", region: "South"      },
-  center_jacksonville: { population: "1,009,833", mae: "5.7%", region: "Southeast"  },
+  center_philly:       { population: "1,550,542", mae: "5.6%", region: "Northeast"  },
+  center_nyc:          { population: "8,258,035", mae: "5.7%", region: "Northeast"  },
+  center_la:           { population: "3,820,914", mae: "6.1%", region: "West Coast" },
+  center_chicago:      { population: "2,664,452", mae: "6.3%", region: "Midwest"    },
+  center_houston:      { population: "2,314,157", mae: "6.4%", region: "South"      },
+  center_phoenix:      { population: "1,650,070", mae: "6.2%", region: "Southwest"  },
+  center_san_antonio:  { population: "1,495,295", mae: "5.7%", region: "South"      },
+  center_san_diego:    { population: "1,388,320", mae: "5.7%", region: "West Coast" },
+  center_dallas:       { population: "1,302,868", mae: "6.5%", region: "South"      },
+  center_jacksonville: { population: "985,843",   mae: "5.7%", region: "Southeast"  },
 };
 
 const CITY_COORDS = {
@@ -41,16 +41,16 @@ const CITY_COORDS = {
 };
 
 const MAE_DATA = [
-  { city: "Dallas",        mae: 6.9 },
+  { city: "Dallas",        mae: 6.5 },
   { city: "Houston",       mae: 6.4 },
-  { city: "Phoenix",       mae: 6.4 },
-  { city: "Chicago",       mae: 6.2 },
-  { city: "San Antonio",   mae: 6.0 },
-  { city: "Los Angeles",   mae: 5.9 },
+  { city: "Chicago",       mae: 6.3 },
+  { city: "Phoenix",       mae: 6.2 },
+  { city: "Los Angeles",   mae: 6.1 },
+  { city: "New York City", mae: 5.7 },
+  { city: "San Antonio",   mae: 5.7 },
+  { city: "San Diego",     mae: 5.7 },
   { city: "Jacksonville",  mae: 5.7 },
   { city: "Philadelphia",  mae: 5.6 },
-  { city: "New York City", mae: 5.5 },
-  { city: "San Diego",     mae: 5.4 },
 ];
 
 const MODEL_CONFIG = [
@@ -60,8 +60,8 @@ const MODEL_CONFIG = [
   ["Train/Test Split", "75% / 25%"],
   ["Training Rows",    "10,820"],
   ["Test Rows",        "3,650"],
-  ["MAE",              "5.12 donors/day"],
-  ["RMSE",             "7.95 donors/day"],
+  ["MAE",              "84.01 donors/day"],
+  ["RMSE",             "131.56 donors/day"],
   ["MAE % of Mean",    "5.9%"],
 ];
 
