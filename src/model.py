@@ -4,8 +4,9 @@
 # File:         model.py
 # Purpose:      Trains an XGBoost regression model to predict daily plasma
 #               donor counts across 10 US cities. Evaluates model performance
-#               using MAE and RMSE, and generates two diagnostic visualizations:-
-#               a residual plot per city and a MAE percentage bar chart.
+#               using MAE and RMSE, and generates three diagnostic visualizations:
+#               a residual plot per city, a MAE percentage bar chart, and a
+#               feature importance chart.
 # Language:     Python 3.12
 # Libraries:    pandas, numpy, xgboost, scikit-learn, matplotlib, joblib, os, json
 # Frameworks:   None
@@ -15,13 +16,13 @@
 
 
 # Import the necessary modules
-import json
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error
 import matplotlib.pyplot as plt
 import joblib
+import json
 import os
 
 
@@ -155,11 +156,11 @@ def evaluate_model(model, X_test, y_test):
 
 def plot_residuals(model, X_test, y_test):
     """
-        Generates a 5x2 grid of residual plots, one per city, expressed as a
-        percentage of each day's actual donor count. This makes all 10 cities
-        directly comparable on a shared axis regardless of their size.
+        Generates a 5x2 grid of residual plots, one per city.
 
-        Residual % = (Actual - Predicted) / Actual * 100
+        Residuals are expressed as a percentage of the actual donor count
+        to remove city-size bias — a 100-donor error means very different
+        things for NYC vs Jacksonville.
 
         Saved as: src/data/plot_residuals.png
 
@@ -194,7 +195,7 @@ def plot_residuals(model, X_test, y_test):
         axes[i].set_title(city, fontsize=11)
         axes[i].set_ylabel("Residual (% of actual)")
 
-    fig.suptitle("Prediction Residuals by City (2023)\nActual − Predicted, as % of actual", fontsize=14)
+    fig.suptitle("Prediction Residuals by City (2023)\n(Actual − Predicted) as % of Actual", fontsize=14)
     plt.tight_layout()
     plt.savefig(os.path.join(DATA_DIR, "plot_residuals.png"), dpi=150)
     plt.show()
@@ -222,8 +223,6 @@ def plot_mae_by_city(model, X_test, y_test):
     test_df["predicted"] = predictions
     test_df["actual"] = y_test.values
 
-    # Calculate MAE as a percentage of each city's average donor count
-    # This normalizes for city size — making all 10 cities directly comparable
     city_mae = (
         test_df.groupby("city")
         .apply(lambda x: (mean_absolute_error(x["actual"], x["predicted"]) / x["actual"].mean()) * 100)
@@ -242,7 +241,6 @@ def plot_mae_by_city(model, X_test, y_test):
         alpha=0.8
     )
 
-    # Add percentage labels on each bar
     for bar, mae_val in zip(bars, city_mae["mae_pct"]):
         ax.text(
             bar.get_width() + 0.1,
@@ -252,7 +250,6 @@ def plot_mae_by_city(model, X_test, y_test):
             fontsize=10
         )
 
-    # Overall MAE as percentage of overall mean donor count
     overall_mae_pct = (mean_absolute_error(y_test.values, predictions) / y_test.mean()) * 100
     ax.axvline(
         x=overall_mae_pct,
@@ -271,52 +268,117 @@ def plot_mae_by_city(model, X_test, y_test):
     plt.show()
     print("MAE plot saved to src/data/plot_mae_by_city.png")
 
-def save_metrics(model, X_test, y_test, path=os.path.join(DATA_DIR, "metrics.json")):
+
+def plot_feature_importance(model, features):
     """
-    Computes evaluation metrics and saves them to a JSON file, so the README
-    and dashboards can all use the same numbers.
+        Generates a horizontal bar chart of XGBoost feature importances,
+        ranked from most to least important.
 
-    Includes a naive baseline ("same as 7 days ago") to show how much the
-    model improves on the simplest possible forecast.
+        Uses the model's built-in 'gain' importance — the average improvement
+        in loss brought by a feature across all trees it appears in. Gain is
+        more informative than 'weight' (split count) because it reflects how
+        much each feature actually improves predictions, not just how often
+        it is used.
 
-    Args:
-        model (XGBRegressor): Trained XGBoost model.
-        X_test (pd.DataFrame): Test features.
-        y_test (pd.Series): Actual donor counts for test period.
-        path (str): Destination path for the metrics JSON file.
+        Saved as: src/data/plot_feature_importance.png
 
-    Returns:
-        dict: Dictionary of computed metrics.
+        Args:
+            model (XGBRegressor): Trained XGBoost model.
+            features (list): Feature names in the same order as training columns.
+
+        Returns:
+            NONE
+    """
+    importances = model.get_booster().get_score(importance_type="gain")
+
+    # Map internal feature names (f0, f1, ...) back to readable names
+    feature_map = {f"f{i}": name for i, name in enumerate(features)}
+    named = {feature_map.get(k, k): v for k, v in importances.items()}
+
+    # Sort descending
+    sorted_features = sorted(named.items(), key=lambda x: x[1], reverse=True)
+    names  = [f for f, _ in sorted_features]
+    values = [v for _, v in sorted_features]
+
+    # Normalize to 0-100% for readability
+    total = sum(values)
+    pct   = [v / total * 100 for v in values]
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+    bars = ax.barh(names[::-1], pct[::-1], color="#4C72B0", alpha=0.85)
+
+    for bar, p in zip(bars, pct[::-1]):
+        ax.text(
+            bar.get_width() + 0.3,
+            bar.get_y() + bar.get_height() / 2,
+            f"{p:.1f}%",
+            va="center",
+            fontsize=10
+        )
+
+    ax.set_xlabel("Relative Importance (% of total gain)")
+    ax.set_title("XGBoost Feature Importance by Gain")
+    plt.tight_layout()
+    plt.savefig(os.path.join(DATA_DIR, "plot_feature_importance.png"), dpi=150)
+    plt.show()
+    print("Feature importance plot saved to src/data/plot_feature_importance.png")
+
+
+def save_metrics(model, X_test, y_test, features):
+    """
+        Computes and saves all model performance metrics to src/data/metrics.json.
+        This file is the single source of truth for all numbers shown in the
+        dashboard, README, and static site.
+
+        Args:
+            model (XGBRegressor): Trained XGBoost model.
+            X_test (pd.DataFrame): Test features.
+            y_test (pd.Series): Actual donor counts for test period.
+            features (list): Feature names.
+
+        Returns:
+            NONE
     """
     predictions = model.predict(X_test)
 
+    mae      = mean_absolute_error(y_test, predictions)
+    rmse     = root_mean_squared_error(y_test, predictions)
+    mae_pct  = round(mae / y_test.mean() * 100, 1)
+    mean_donors = round(y_test.mean(), 1)
+
+    # Naive baseline: predict same as 7 days ago (donor_lag_7)
     df_full = pd.read_csv(os.path.join(DATA_DIR, "donor_data_featured.csv"))
-    cities = df_full.loc[X_test.index, "city"]
+    df_full["date"] = pd.to_datetime(df_full["date"])
+    test_df = df_full[df_full["date"].dt.year == 2023].copy().reset_index(drop=True)
+    naive_mae     = mean_absolute_error(test_df["donor_count"], test_df["donor_lag_7"])
+    naive_mae_pct = round(naive_mae / test_df["donor_count"].mean() * 100, 1)
 
-    mean_actual = y_test.mean()
-    mae = mean_absolute_error(y_test, predictions)
-    naive_mae = mean_absolute_error(y_test, X_test["donor_lag_7"])
-
-    per_city = {}
-    for city in sorted(cities.unique()):
-        mask = (cities == city).values
-        city_mae = mean_absolute_error(y_test[mask], predictions[mask])
-        per_city[city] = round(city_mae / y_test[mask].mean() * 100, 1)
+    # Per-city MAE %
+    test_df["predicted"] = predictions
+    test_df["actual"]    = y_test.values
+    city_mae = (
+        test_df.groupby("city")
+        .apply(lambda x: round(
+            mean_absolute_error(x["actual"], x["predicted"]) / x["actual"].mean() * 100, 1
+        ))
+        .to_dict()
+    )
 
     metrics = {
-        "mae": round(mae, 2),
-        "rmse": round(root_mean_squared_error(y_test, predictions), 2),
-        "mae_pct": round(mae / mean_actual * 100, 1),
-        "naive_lag7_mae_pct": round(naive_mae / mean_actual * 100, 1),
-        "mean_daily_donors": round(mean_actual, 1),
-        "mae_pct_by_city": per_city,
+        "mae":                round(mae, 2),
+        "rmse":               round(rmse, 2),
+        "mae_pct":            mae_pct,
+        "naive_lag7_mae_pct": naive_mae_pct,
+        "mean_daily_donors":  mean_donors,
+        "mae_pct_by_city":    city_mae,
     }
 
-    with open(path, "w") as f:
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(os.path.join(DATA_DIR, "metrics.json"), "w") as f:
         json.dump(metrics, f, indent=2)
-    print(f"Metrics saved to {path}")
+    print(f"\nMetrics saved to src/data/metrics.json")
     print(json.dumps(metrics, indent=2))
-    return metrics
+
 
 def save_model(model, features, path=os.path.join(DATA_DIR, "model.pkl")):
     """
@@ -360,5 +422,6 @@ if __name__ == "__main__":
     predictions = evaluate_model(model, X_test, y_test)
     plot_residuals(model, X_test, y_test)
     plot_mae_by_city(model, X_test, y_test)
+    plot_feature_importance(model, features)
+    save_metrics(model, X_test, y_test, features)
     save_model(model, features)
-    save_metrics(model, X_test, y_test)
