@@ -7,7 +7,7 @@
 #               using MAE and RMSE, and generates two diagnostic visualizations:-
 #               a residual plot per city and a MAE percentage bar chart.
 # Language:     Python 3.12
-# Libraries:    pandas, numpy, xgboost, scikit-learn, matplotlib, joblib, os
+# Libraries:    pandas, numpy, xgboost, scikit-learn, matplotlib, joblib, os, json
 # Frameworks:   None
 # APIs:         None
 # GitHub:       https://github.com/PW13052003/plasmacast/blob/main/src/model.py
@@ -15,6 +15,7 @@
 
 
 # Import the necessary modules
+import json
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
@@ -154,9 +155,11 @@ def evaluate_model(model, X_test, y_test):
 
 def plot_residuals(model, X_test, y_test):
     """
-        Generates a 5x2 grid of residual plots, one per city, with a shared Y axis.
+        Generates a 5x2 grid of residual plots, one per city, expressed as a
+        percentage of each day's actual donor count. This makes all 10 cities
+        directly comparable on a shared axis regardless of their size.
 
-        Residual = Actual - Predicted for each day.
+        Residual % = (Actual - Predicted) / Actual * 100
 
         Saved as: src/data/plot_residuals.png
 
@@ -176,6 +179,7 @@ def plot_residuals(model, X_test, y_test):
     test_df["predicted"] = predictions
     test_df["actual"] = y_test.values
     test_df["residual"] = test_df["actual"] - test_df["predicted"]
+    test_df["residual_pct"] = test_df["residual"] / test_df["actual"] * 100
 
     cities = sorted(test_df["city"].unique())
     colors = plt.cm.tab10.colors
@@ -185,13 +189,12 @@ def plot_residuals(model, X_test, y_test):
 
     for i, city in enumerate(cities):
         city_df = test_df[test_df["city"] == city].reset_index(drop=True)
-        axes[i].plot(city_df["residual"], color=colors[i], alpha=0.7, linewidth=0.8)
+        axes[i].plot(city_df["residual_pct"], color=colors[i], alpha=0.7, linewidth=0.8)
         axes[i].axhline(y=0, color="black", linestyle="--", linewidth=1)
-        axes[i].set_ylim(-200, 200)
         axes[i].set_title(city, fontsize=11)
-        axes[i].set_ylabel("Residual (donors)")
+        axes[i].set_ylabel("Residual (% of actual)")
 
-    fig.suptitle("Prediction Residuals by City (2023)\nActual − Predicted", fontsize=14)
+    fig.suptitle("Prediction Residuals by City (2023)\nActual − Predicted, as % of actual", fontsize=14)
     plt.tight_layout()
     plt.savefig(os.path.join(DATA_DIR, "plot_residuals.png"), dpi=150)
     plt.show()
@@ -268,6 +271,53 @@ def plot_mae_by_city(model, X_test, y_test):
     plt.show()
     print("MAE plot saved to src/data/plot_mae_by_city.png")
 
+def save_metrics(model, X_test, y_test, path=os.path.join(DATA_DIR, "metrics.json")):
+    """
+    Computes evaluation metrics and saves them to a JSON file, so the README
+    and dashboards can all use the same numbers.
+
+    Includes a naive baseline ("same as 7 days ago") to show how much the
+    model improves on the simplest possible forecast.
+
+    Args:
+        model (XGBRegressor): Trained XGBoost model.
+        X_test (pd.DataFrame): Test features.
+        y_test (pd.Series): Actual donor counts for test period.
+        path (str): Destination path for the metrics JSON file.
+
+    Returns:
+        dict: Dictionary of computed metrics.
+    """
+    predictions = model.predict(X_test)
+
+    df_full = pd.read_csv(os.path.join(DATA_DIR, "donor_data_featured.csv"))
+    cities = df_full.loc[X_test.index, "city"]
+
+    mean_actual = y_test.mean()
+    mae = mean_absolute_error(y_test, predictions)
+    naive_mae = mean_absolute_error(y_test, X_test["donor_lag_7"])
+
+    per_city = {}
+    for city in sorted(cities.unique()):
+        mask = (cities == city).values
+        city_mae = mean_absolute_error(y_test[mask], predictions[mask])
+        per_city[city] = round(city_mae / y_test[mask].mean() * 100, 1)
+
+    metrics = {
+        "mae": round(mae, 2),
+        "rmse": round(root_mean_squared_error(y_test, predictions), 2),
+        "mae_pct": round(mae / mean_actual * 100, 1),
+        "naive_lag7_mae_pct": round(naive_mae / mean_actual * 100, 1),
+        "mean_daily_donors": round(mean_actual, 1),
+        "mae_pct_by_city": per_city,
+    }
+
+    with open(path, "w") as f:
+        json.dump(metrics, f, indent=2)
+    print(f"Metrics saved to {path}")
+    print(json.dumps(metrics, indent=2))
+    return metrics
+
 def save_model(model, features, path=os.path.join(DATA_DIR, "model.pkl")):
     """
         Saves the trained model and feature list together as a single .pkl file
@@ -311,3 +361,4 @@ if __name__ == "__main__":
     plot_residuals(model, X_test, y_test)
     plot_mae_by_city(model, X_test, y_test)
     save_model(model, features)
+    save_metrics(model, X_test, y_test)

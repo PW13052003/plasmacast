@@ -426,9 +426,9 @@
         <p class="explanation-text">
           MAE (Mean Absolute Error) measures how many donors off our predictions are on average per day.
           We show it as a percentage of each city's average donor count to make fair comparisons across
-          cities of very different sizes. An MAE of 15 donors means very different things for NYC (318 avg)
-          vs Jacksonville (38 avg) — so percentage normalizes for that difference.
-          The tight 5.4%–6.9% range across all 10 cities shows the model generalizes well regardless of city size.
+          cities of very different sizes. An MAE of 100 donors means very different things for NYC (~5,239 avg)
+          vs Jacksonville (~624 avg) — so percentage normalizes for that difference.
+          The tight 5.6%–7.5% range across all 10 cities shows the model generalizes well regardless of city size.
         </p>
       </div>
     </div>
@@ -442,9 +442,9 @@
         </div>
       </div>
       <div class="grid-3" style="margin-bottom:24px;">
-        <div class="card metric-card"><div class="metric-value accent">5.12</div><div class="metric-label">Mean Absolute Error (donors/day)</div></div>
-        <div class="card metric-card"><div class="metric-value accent">94.1%</div><div class="metric-label">Overall Prediction Accuracy</div></div>
-        <div class="card metric-card"><div class="metric-value accent">5.9%</div><div class="metric-label">MAE as % of Mean Donor Count</div></div>
+        <div class="card metric-card"><div class="metric-value accent">85.98</div><div class="metric-label">Mean Absolute Error (donors/day)</div></div>
+        <div class="card metric-card"><div class="metric-value accent">13.0%</div><div class="metric-label">Naive baseline error (same day last week)</div></div>
+        <div class="card metric-card"><div class="metric-value accent">6.0%</div><div class="metric-label">MAE as % of Mean Donor Count</div></div>
         <div class="card metric-card"><div class="metric-value">10,820</div><div class="metric-label">Training Rows (2020–2022)</div></div>
         <div class="card metric-card"><div class="metric-value">3,650</div><div class="metric-label">Test Rows (2023)</div></div>
         <div class="card metric-card"><div class="metric-value">75/25</div><div class="metric-label">Train/Test Split</div></div>
@@ -503,42 +503,42 @@
   // CONSTANTS
   // =============================================
   const CITIES = {
-    center_philly:       { name: "Philadelphia",  base: 60  },
-    center_nyc:          { name: "New York City", base: 318 },
-    center_la:           { name: "Los Angeles",   base: 145 },
-    center_chicago:      { name: "Chicago",       base: 102 },
-    center_houston:      { name: "Houston",       base: 90  },
-    center_phoenix:      { name: "Phoenix",       base: 63  },
-    center_san_antonio:  { name: "San Antonio",   base: 57  },
-    center_san_diego:    { name: "San Diego",     base: 53  },
-    center_dallas:       { name: "Dallas",        base: 50  },
-    center_jacksonville: { name: "Jacksonville",  base: 38  },
+    center_philly:       { name: "Philadelphia",  base: 973  },
+    center_nyc:          { name: "New York City", base: 5239 },
+    center_la:           { name: "Los Angeles",   base: 2397 },
+    center_chicago:      { name: "Chicago",       base: 1682 },
+    center_houston:      { name: "Houston",       base: 1477 },
+    center_phoenix:      { name: "Phoenix",       base: 1034 },
+    center_san_antonio:  { name: "San Antonio",   base: 943  },
+    center_san_diego:    { name: "San Diego",     base: 868  },
+    center_dallas:       { name: "Dallas",        base: 820  },
+    center_jacksonville: { name: "Jacksonville",  base: 624  },
   };
 
   const CITY_STATS = {
-    center_philly:       { population: "1,573,916", mae: "5.6%", region: "Northeast"  },
-    center_nyc:          { population: "8,478,072", mae: "5.5%", region: "Northeast"  },
-    center_la:           { population: "3,878,704", mae: "5.9%", region: "West Coast" },
-    center_chicago:      { population: "2,721,308", mae: "6.2%", region: "Midwest"    },
-    center_houston:      { population: "2,390,125", mae: "6.4%", region: "South"      },
+    center_philly:       { population: "1,573,916", mae: "5.8%", region: "Northeast"  },
+    center_nyc:          { population: "8,478,072", mae: "5.8%", region: "Northeast"  },
+    center_la:           { population: "3,878,704", mae: "5.6%", region: "West Coast" },
+    center_chicago:      { population: "2,721,308", mae: "6.1%", region: "Midwest"    },
+    center_houston:      { population: "2,390,125", mae: "6.3%", region: "South"      },
     center_phoenix:      { population: "1,673,164", mae: "6.4%", region: "Southwest"  },
-    center_san_antonio:  { population: "1,526,656", mae: "6.0%", region: "South"      },
-    center_san_diego:    { population: "1,404,452", mae: "5.4%", region: "West Coast" },
-    center_dallas:       { population: "1,326,087", mae: "6.9%", region: "South"      },
-    center_jacksonville: { population: "1,009,833", mae: "5.7%", region: "Southeast"  },
+    center_san_antonio:  { population: "1,526,656", mae: "5.9%", region: "South"      },
+    center_san_diego:    { population: "1,404,452", mae: "5.6%", region: "West Coast" },
+    center_dallas:       { population: "1,326,087", mae: "7.5%", region: "South"      },
+    center_jacksonville: { population: "1,009,833", mae: "5.8%", region: "Southeast"  },
   };
 
   const MAE_DATA = [
-    { city: "Dallas",        mae: 6.9 },
-    { city: "Houston",       mae: 6.4 },
+    { city: "Dallas",        mae: 7.5 },
     { city: "Phoenix",       mae: 6.4 },
-    { city: "Chicago",       mae: 6.2 },
-    { city: "San Antonio",   mae: 6.0 },
-    { city: "Los Angeles",   mae: 5.9 },
-    { city: "Jacksonville",  mae: 5.7 },
-    { city: "Philadelphia",  mae: 5.6 },
-    { city: "New York City", mae: 5.5 },
-    { city: "San Diego",     mae: 5.4 },
+    { city: "Houston",       mae: 6.3 },
+    { city: "Chicago",       mae: 6.1 },
+    { city: "San Antonio",   mae: 5.9 },
+    { city: "Philadelphia",  mae: 5.8 },
+    { city: "New York City", mae: 5.8 },
+    { city: "Jacksonville",  mae: 5.8 },
+    { city: "Los Angeles",   mae: 5.6 },
+    { city: "San Diego",     mae: 5.6 },
   ];
 
   const MODEL_CONFIG = [
@@ -548,9 +548,9 @@
     ["Train/Test Split", "75% / 25%"],
     ["Training Rows",    "10,820"],
     ["Test Rows",        "3,650"],
-    ["MAE",              "5.12 donors/day"],
-    ["RMSE",             "7.95 donors/day"],
-    ["MAE % of Mean",    "5.9%"],
+    ["MAE",              "85.98 donors/day"],
+    ["RMSE",             "134.33 donors/day"],
+    ["MAE % of Mean",    "6.0%"],
   ];
 
   const FEATURES = [
@@ -706,7 +706,6 @@
     document.getElementById("busiest-day").textContent  = "--";
     document.getElementById("quietest-day").textContent = "--";
 
-    // Load pre-computed predictions
     if (!Object.keys(allPredictions).length) {
       try {
         const res      = await fetch("predictions.json");
@@ -744,12 +743,10 @@
     const total  = counts.reduce((a, b) => a + b, 0);
     const maxVal = Math.max(...counts);
 
-    // Last updated
     const now = new Date();
     document.getElementById("last-updated").textContent =
       `Last updated: ${now.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
 
-    // Summary cards
     animateCounter("today-count", forecasts[0].count);
     document.getElementById("today-label").textContent    = `donors expected — ${forecasts[0].day} ${forecasts[0].date}`;
     document.getElementById("busiest-day").textContent    = forecasts[maxIdx].day;
@@ -758,7 +755,6 @@
     document.getElementById("quietest-count").textContent = `${forecasts[minIdx].count} donors — ${forecasts[minIdx].date}`;
     animateCounter("week-total", total);
 
-    // SVG Chart
     const W = 900, H = 300;
     const padL = 55, padR = 24, padT = 24, padB = 64;
     const chartW = W - padL - padR;
@@ -812,7 +808,6 @@
         <line x1="${padL}" y1="${padT + chartH}" x2="${W - padR}" y2="${padT + chartH}" stroke="var(--border)" stroke-width="1.5"/>
       </svg>`;
 
-    // Table
     document.getElementById("forecast-table").innerHTML = `
       <table class="forecast-table">
         <thead><tr><th>Day</th><th>Date</th><th>Predicted Donors</th><th>Demand Level</th></tr></thead>
@@ -842,7 +837,7 @@
           </div>
           <div class="mae-value">${d.mae}%</div>
         </div>`).join("") +
-      `<div class="mae-overall-line">Overall model MAE: <strong style="color:var(--accent);">5.9%</strong> of average daily donor count</div>`;
+      `<div class="mae-overall-line">Overall model MAE: <strong style="color:var(--accent);">6.0%</strong> of average daily donor count</div>`;
   }
 
   // =============================================

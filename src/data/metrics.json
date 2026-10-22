@@ -1,0 +1,19 @@
+{
+  "mae": 85.98,
+  "rmse": 134.33,
+  "mae_pct": 6.0,
+  "naive_lag7_mae_pct": 13.0,
+  "mean_daily_donors": 1443.0,
+  "mae_pct_by_city": {
+    "Chicago": 6.1,
+    "Dallas": 7.5,
+    "Houston": 6.3,
+    "Jacksonville": 5.8,
+    "Los Angeles": 5.6,
+    "New York City": 5.8,
+    "Philadelphia": 5.8,
+    "Phoenix": 6.4,
+    "San Antonio": 5.9,
+    "San Diego": 5.6
+  }
+}

@@ -1,1 +1,1222 @@
-{"center_philly": [{"date": "2026-04-27", "predicted_donors": 62}, {"date": "2026-04-28", "predicted_donors": 64}, {"date": "2026-04-29", "predicted_donors": 64}, {"date": "2026-04-30", "predicted_donors": 61}, {"date": "2026-05-01", "predicted_donors": 56}, {"date": "2026-05-02", "predicted_donors": 53}, {"date": "2026-05-03", "predicted_donors": 51}, {"date": "2026-05-04", "predicted_donors": 62}, {"date": "2026-05-05", "predicted_donors": 64}, {"date": "2026-05-06", "predicted_donors": 64}, {"date": "2026-05-07", "predicted_donors": 61}, {"date": "2026-05-08", "predicted_donors": 56}, {"date": "2026-05-09", "predicted_donors": 54}, {"date": "2026-05-10", "predicted_donors": 51}, {"date": "2026-05-11", "predicted_donors": 62}, {"date": "2026-05-12", "predicted_donors": 64}, {"date": "2026-05-13", "predicted_donors": 64}, {"date": "2026-05-14", "predicted_donors": 62}, {"date": "2026-05-15", "predicted_donors": 56}, {"date": "2026-05-16", "predicted_donors": 54}, {"date": "2026-05-17", "predicted_donors": 51}, {"date": "2026-05-18", "predicted_donors": 62}, {"date": "2026-05-19", "predicted_donors": 64}, {"date": "2026-05-20", "predicted_donors": 64}, {"date": "2026-05-21", "predicted_donors": 62}, {"date": "2026-05-22", "predicted_donors": 56}, {"date": "2026-05-23", "predicted_donors": 54}, {"date": "2026-05-24", "predicted_donors": 51}, {"date": "2026-05-25", "predicted_donors": 32}, {"date": "2026-05-26", "predicted_donors": 64}], "center_nyc": [{"date": "2026-04-27", "predicted_donors": 356}, {"date": "2026-04-28", "predicted_donors": 367}, {"date": "2026-04-29", "predicted_donors": 366}, {"date": "2026-04-30", "predicted_donors": 349}, {"date": "2026-05-01", "predicted_donors": 303}, {"date": "2026-05-02", "predicted_donors": 260}, {"date": "2026-05-03", "predicted_donors": 231}, {"date": "2026-05-04", "predicted_donors": 354}, {"date": "2026-05-05", "predicted_donors": 365}, {"date": "2026-05-06", "predicted_donors": 365}, {"date": "2026-05-07", "predicted_donors": 348}, {"date": "2026-05-08", "predicted_donors": 302}, {"date": "2026-05-09", "predicted_donors": 260}, {"date": "2026-05-10", "predicted_donors": 230}, {"date": "2026-05-11", "predicted_donors": 354}, {"date": "2026-05-12", "predicted_donors": 365}, {"date": "2026-05-13", "predicted_donors": 364}, {"date": "2026-05-14", "predicted_donors": 350}, {"date": "2026-05-15", "predicted_donors": 304}, {"date": "2026-05-16", "predicted_donors": 262}, {"date": "2026-05-17", "predicted_donors": 233}, {"date": "2026-05-18", "predicted_donors": 357}, {"date": "2026-05-19", "predicted_donors": 368}, {"date": "2026-05-20", "predicted_donors": 368}, {"date": "2026-05-21", "predicted_donors": 350}, {"date": "2026-05-22", "predicted_donors": 304}, {"date": "2026-05-23", "predicted_donors": 262}, {"date": "2026-05-24", "predicted_donors": 231}, {"date": "2026-05-25", "predicted_donors": 173}, {"date": "2026-05-26", "predicted_donors": 366}], "center_la": [{"date": "2026-04-27", "predicted_donors": 157}, {"date": "2026-04-28", "predicted_donors": 162}, {"date": "2026-04-29", "predicted_donors": 162}, {"date": "2026-04-30", "predicted_donors": 154}, {"date": "2026-05-01", "predicted_donors": 139}, {"date": "2026-05-02", "predicted_donors": 136}, {"date": "2026-05-03", "predicted_donors": 130}, {"date": "2026-05-04", "predicted_donors": 157}, {"date": "2026-05-05", "predicted_donors": 162}, {"date": "2026-05-06", "predicted_donors": 161}, {"date": "2026-05-07", "predicted_donors": 154}, {"date": "2026-05-08", "predicted_donors": 139}, {"date": "2026-05-09", "predicted_donors": 136}, {"date": "2026-05-10", "predicted_donors": 130}, {"date": "2026-05-11", "predicted_donors": 157}, {"date": "2026-05-12", "predicted_donors": 162}, {"date": "2026-05-13", "predicted_donors": 161}, {"date": "2026-05-14", "predicted_donors": 154}, {"date": "2026-05-15", "predicted_donors": 139}, {"date": "2026-05-16", "predicted_donors": 135}, {"date": "2026-05-17", "predicted_donors": 130}, {"date": "2026-05-18", "predicted_donors": 156}, {"date": "2026-05-19", "predicted_donors": 161}, {"date": "2026-05-20", "predicted_donors": 161}, {"date": "2026-05-21", "predicted_donors": 154}, {"date": "2026-05-22", "predicted_donors": 139}, {"date": "2026-05-23", "predicted_donors": 135}, {"date": "2026-05-24", "predicted_donors": 130}, {"date": "2026-05-25", "predicted_donors": 81}, {"date": "2026-05-26", "predicted_donors": 161}], "center_chicago": [{"date": "2026-04-27", "predicted_donors": 111}, {"date": "2026-04-28", "predicted_donors": 114}, {"date": "2026-04-29", "predicted_donors": 114}, {"date": "2026-04-30", "predicted_donors": 109}, {"date": "2026-05-01", "predicted_donors": 99}, {"date": "2026-05-02", "predicted_donors": 92}, {"date": "2026-05-03", "predicted_donors": 86}, {"date": "2026-05-04", "predicted_donors": 111}, {"date": "2026-05-05", "predicted_donors": 114}, {"date": "2026-05-06", "predicted_donors": 114}, {"date": "2026-05-07", "predicted_donors": 109}, {"date": "2026-05-08", "predicted_donors": 99}, {"date": "2026-05-09", "predicted_donors": 93}, {"date": "2026-05-10", "predicted_donors": 86}, {"date": "2026-05-11", "predicted_donors": 111}, {"date": "2026-05-12", "predicted_donors": 114}, {"date": "2026-05-13", "predicted_donors": 114}, {"date": "2026-05-14", "predicted_donors": 109}, {"date": "2026-05-15", "predicted_donors": 99}, {"date": "2026-05-16", "predicted_donors": 93}, {"date": "2026-05-17", "predicted_donors": 86}, {"date": "2026-05-18", "predicted_donors": 111}, {"date": "2026-05-19", "predicted_donors": 114}, {"date": "2026-05-20", "predicted_donors": 114}, {"date": "2026-05-21", "predicted_donors": 109}, {"date": "2026-05-22", "predicted_donors": 99}, {"date": "2026-05-23", "predicted_donors": 93}, {"date": "2026-05-24", "predicted_donors": 86}, {"date": "2026-05-25", "predicted_donors": 57}, {"date": "2026-05-26", "predicted_donors": 114}], "center_houston": [{"date": "2026-04-27", "predicted_donors": 102}, {"date": "2026-04-28", "predicted_donors": 102}, {"date": "2026-04-29", "predicted_donors": 102}, {"date": "2026-04-30", "predicted_donors": 96}, {"date": "2026-05-01", "predicted_donors": 86}, {"date": "2026-05-02", "predicted_donors": 79}, {"date": "2026-05-03", "predicted_donors": 74}, {"date": "2026-05-04", "predicted_donors": 102}, {"date": "2026-05-05", "predicted_donors": 102}, {"date": "2026-05-06", "predicted_donors": 102}, {"date": "2026-05-07", "predicted_donors": 96}, {"date": "2026-05-08", "predicted_donors": 86}, {"date": "2026-05-09", "predicted_donors": 79}, {"date": "2026-05-10", "predicted_donors": 74}, {"date": "2026-05-11", "predicted_donors": 102}, {"date": "2026-05-12", "predicted_donors": 102}, {"date": "2026-05-13", "predicted_donors": 102}, {"date": "2026-05-14", "predicted_donors": 96}, {"date": "2026-05-15", "predicted_donors": 86}, {"date": "2026-05-16", "predicted_donors": 79}, {"date": "2026-05-17", "predicted_donors": 74}, {"date": "2026-05-18", "predicted_donors": 102}, {"date": "2026-05-19", "predicted_donors": 102}, {"date": "2026-05-20", "predicted_donors": 102}, {"date": "2026-05-21", "predicted_donors": 96}, {"date": "2026-05-22", "predicted_donors": 86}, {"date": "2026-05-23", "predicted_donors": 79}, {"date": "2026-05-24", "predicted_donors": 74}, {"date": "2026-05-25", "predicted_donors": 56}, {"date": "2026-05-26", "predicted_donors": 102}], "center_phoenix": [{"date": "2026-04-27", "predicted_donors": 63}, {"date": "2026-04-28", "predicted_donors": 65}, {"date": "2026-04-29", "predicted_donors": 65}, {"date": "2026-04-30", "predicted_donors": 63}, {"date": "2026-05-01", "predicted_donors": 57}, {"date": "2026-05-02", "predicted_donors": 55}, {"date": "2026-05-03", "predicted_donors": 52}, {"date": "2026-05-04", "predicted_donors": 63}, {"date": "2026-05-05", "predicted_donors": 65}, {"date": "2026-05-06", "predicted_donors": 65}, {"date": "2026-05-07", "predicted_donors": 63}, {"date": "2026-05-08", "predicted_donors": 57}, {"date": "2026-05-09", "predicted_donors": 55}, {"date": "2026-05-10", "predicted_donors": 52}, {"date": "2026-05-11", "predicted_donors": 63}, {"date": "2026-05-12", "predicted_donors": 65}, {"date": "2026-05-13", "predicted_donors": 65}, {"date": "2026-05-14", "predicted_donors": 63}, {"date": "2026-05-15", "predicted_donors": 57}, {"date": "2026-05-16", "predicted_donors": 55}, {"date": "2026-05-17", "predicted_donors": 52}, {"date": "2026-05-18", "predicted_donors": 63}, {"date": "2026-05-19", "predicted_donors": 65}, {"date": "2026-05-20", "predicted_donors": 65}, {"date": "2026-05-21", "predicted_donors": 63}, {"date": "2026-05-22", "predicted_donors": 57}, {"date": "2026-05-23", "predicted_donors": 55}, {"date": "2026-05-24", "predicted_donors": 52}, {"date": "2026-05-25", "predicted_donors": 32}, {"date": "2026-05-26", "predicted_donors": 65}], "center_san_antonio": [{"date": "2026-04-27", "predicted_donors": 61}, {"date": "2026-04-28", "predicted_donors": 63}, {"date": "2026-04-29", "predicted_donors": 63}, {"date": "2026-04-30", "predicted_donors": 61}, {"date": "2026-05-01", "predicted_donors": 54}, {"date": "2026-05-02", "predicted_donors": 52}, {"date": "2026-05-03", "predicted_donors": 50}, {"date": "2026-05-04", "predicted_donors": 61}, {"date": "2026-05-05", "predicted_donors": 63}, {"date": "2026-05-06", "predicted_donors": 63}, {"date": "2026-05-07", "predicted_donors": 61}, {"date": "2026-05-08", "predicted_donors": 54}, {"date": "2026-05-09", "predicted_donors": 52}, {"date": "2026-05-10", "predicted_donors": 49}, {"date": "2026-05-11", "predicted_donors": 61}, {"date": "2026-05-12", "predicted_donors": 63}, {"date": "2026-05-13", "predicted_donors": 63}, {"date": "2026-05-14", "predicted_donors": 61}, {"date": "2026-05-15", "predicted_donors": 54}, {"date": "2026-05-16", "predicted_donors": 52}, {"date": "2026-05-17", "predicted_donors": 50}, {"date": "2026-05-18", "predicted_donors": 61}, {"date": "2026-05-19", "predicted_donors": 64}, {"date": "2026-05-20", "predicted_donors": 64}, {"date": "2026-05-21", "predicted_donors": 61}, {"date": "2026-05-22", "predicted_donors": 54}, {"date": "2026-05-23", "predicted_donors": 52}, {"date": "2026-05-24", "predicted_donors": 50}, {"date": "2026-05-25", "predicted_donors": 31}, {"date": "2026-05-26", "predicted_donors": 64}], "center_san_diego": [{"date": "2026-04-27", "predicted_donors": 56}, {"date": "2026-04-28", "predicted_donors": 57}, {"date": "2026-04-29", "predicted_donors": 57}, {"date": "2026-04-30", "predicted_donors": 55}, {"date": "2026-05-01", "predicted_donors": 49}, {"date": "2026-05-02", "predicted_donors": 45}, {"date": "2026-05-03", "predicted_donors": 43}, {"date": "2026-05-04", "predicted_donors": 56}, {"date": "2026-05-05", "predicted_donors": 57}, {"date": "2026-05-06", "predicted_donors": 57}, {"date": "2026-05-07", "predicted_donors": 55}, {"date": "2026-05-08", "predicted_donors": 49}, {"date": "2026-05-09", "predicted_donors": 45}, {"date": "2026-05-10", "predicted_donors": 43}, {"date": "2026-05-11", "predicted_donors": 56}, {"date": "2026-05-12", "predicted_donors": 57}, {"date": "2026-05-13", "predicted_donors": 57}, {"date": "2026-05-14", "predicted_donors": 56}, {"date": "2026-05-15", "predicted_donors": 49}, {"date": "2026-05-16", "predicted_donors": 45}, {"date": "2026-05-17", "predicted_donors": 43}, {"date": "2026-05-18", "predicted_donors": 56}, {"date": "2026-05-19", "predicted_donors": 58}, {"date": "2026-05-20", "predicted_donors": 58}, {"date": "2026-05-21", "predicted_donors": 55}, {"date": "2026-05-22", "predicted_donors": 49}, {"date": "2026-05-23", "predicted_donors": 45}, {"date": "2026-05-24", "predicted_donors": 43}, {"date": "2026-05-25", "predicted_donors": 30}, {"date": "2026-05-26", "predicted_donors": 58}], "center_dallas": [{"date": "2026-04-27", "predicted_donors": 52}, {"date": "2026-04-28", "predicted_donors": 53}, {"date": "2026-04-29", "predicted_donors": 53}, {"date": "2026-04-30", "predicted_donors": 52}, {"date": "2026-05-01", "predicted_donors": 47}, {"date": "2026-05-02", "predicted_donors": 40}, {"date": "2026-05-03", "predicted_donors": 38}, {"date": "2026-05-04", "predicted_donors": 52}, {"date": "2026-05-05", "predicted_donors": 54}, {"date": "2026-05-06", "predicted_donors": 54}, {"date": "2026-05-07", "predicted_donors": 52}, {"date": "2026-05-08", "predicted_donors": 47}, {"date": "2026-05-09", "predicted_donors": 40}, {"date": "2026-05-10", "predicted_donors": 38}, {"date": "2026-05-11", "predicted_donors": 52}, {"date": "2026-05-12", "predicted_donors": 54}, {"date": "2026-05-13", "predicted_donors": 54}, {"date": "2026-05-14", "predicted_donors": 53}, {"date": "2026-05-15", "predicted_donors": 48}, {"date": "2026-05-16", "predicted_donors": 41}, {"date": "2026-05-17", "predicted_donors": 38}, {"date": "2026-05-18", "predicted_donors": 52}, {"date": "2026-05-19", "predicted_donors": 54}, {"date": "2026-05-20", "predicted_donors": 54}, {"date": "2026-05-21", "predicted_donors": 53}, {"date": "2026-05-22", "predicted_donors": 48}, {"date": "2026-05-23", "predicted_donors": 41}, {"date": "2026-05-24", "predicted_donors": 38}, {"date": "2026-05-25", "predicted_donors": 31}, {"date": "2026-05-26", "predicted_donors": 54}], "center_jacksonville": [{"date": "2026-04-27", "predicted_donors": 40}, {"date": "2026-04-28", "predicted_donors": 41}, {"date": "2026-04-29", "predicted_donors": 41}, {"date": "2026-04-30", "predicted_donors": 40}, {"date": "2026-05-01", "predicted_donors": 36}, {"date": "2026-05-02", "predicted_donors": 31}, {"date": "2026-05-03", "predicted_donors": 26}, {"date": "2026-05-04", "predicted_donors": 40}, {"date": "2026-05-05", "predicted_donors": 41}, {"date": "2026-05-06", "predicted_donors": 41}, {"date": "2026-05-07", "predicted_donors": 40}, {"date": "2026-05-08", "predicted_donors": 36}, {"date": "2026-05-09", "predicted_donors": 31}, {"date": "2026-05-10", "predicted_donors": 26}, {"date": "2026-05-11", "predicted_donors": 40}, {"date": "2026-05-12", "predicted_donors": 41}, {"date": "2026-05-13", "predicted_donors": 41}, {"date": "2026-05-14", "predicted_donors": 40}, {"date": "2026-05-15", "predicted_donors": 36}, {"date": "2026-05-16", "predicted_donors": 31}, {"date": "2026-05-17", "predicted_donors": 26}, {"date": "2026-05-18", "predicted_donors": 40}, {"date": "2026-05-19", "predicted_donors": 41}, {"date": "2026-05-20", "predicted_donors": 41}, {"date": "2026-05-21", "predicted_donors": 40}, {"date": "2026-05-22", "predicted_donors": 36}, {"date": "2026-05-23", "predicted_donors": 31}, {"date": "2026-05-24", "predicted_donors": 26}, {"date": "2026-05-25", "predicted_donors": 20}, {"date": "2026-05-26", "predicted_donors": 41}]}
+{
+  "center_nyc": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 4913
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 5097
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 4095
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 3468
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 5908
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 6062
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 5215
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 5179
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 4908
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 3972
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 3341
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 5644
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 5710
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 5342
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 5378
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 4871
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 3746
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 3071
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 5744
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 5938
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 3070
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 5635
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 4851
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 3823
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 3095
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 5702
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 5933
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 5722
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 5611
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 4898
+    }
+  ],
+  "center_la": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 1846
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 2300
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 2395
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 2200
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 2456
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 2419
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 2080
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 1854
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 2225
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 2318
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 2228
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 2552
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 2589
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 2181
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 1885
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 2234
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 2217
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 2113
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 2629
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 2723
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 1329
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 1907
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 2242
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 2155
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 2063
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 2664
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 2770
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 2453
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 1902
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 2258
+    }
+  ],
+  "center_chicago": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 1447
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 1458
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 1507
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 1322
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 1648
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 1517
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 1449
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 1393
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 1426
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 1490
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 1290
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 1595
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 1582
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 1667
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 1599
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 1490
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 1437
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 1188
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 1671
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 1737
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 888
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 1650
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 1480
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 1428
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 1122
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 1666
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 1737
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1746
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 1672
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 1508
+    }
+  ],
+  "center_houston": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 1435
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 1554
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 1556
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 1467
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 1630
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 1625
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 1456
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 1547
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 1588
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 1567
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 1390
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 1599
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 1665
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 1713
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 1674
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 1496
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 1432
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 1327
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 1662
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 1740
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 895
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 1713
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 1514
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 1430
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 1289
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 1646
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 1759
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1749
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 1752
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 1507
+    }
+  ],
+  "center_phoenix": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 967
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 980
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 1016
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 921
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 1089
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 1081
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 1055
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 1071
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 1028
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 994
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 872
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 1095
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 1151
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 1185
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 1228
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 1192
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 1052
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 893
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 1301
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 1346
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 766
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 1304
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 1221
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 1077
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 909
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 1346
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 1564
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1533
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 1427
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 1329
+    }
+  ],
+  "center_philly": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 816
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 817
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 811
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 889
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 917
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 960
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 882
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 912
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 864
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 829
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 833
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 983
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 1021
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 992
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 1028
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 851
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 762
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 769
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 969
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 1032
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 535
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 981
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 854
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 714
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 669
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 952
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 1018
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1041
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 996
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 858
+    }
+  ],
+  "center_san_antonio": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 919
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 977
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 1019
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 945
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 994
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 1077
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 1020
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 999
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 965
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 983
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 881
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 1014
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 1115
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 1102
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 1139
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 993
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 988
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 839
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 1097
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 1168
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 647
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 1126
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 958
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 920
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 808
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 1090
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 1120
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1126
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 1141
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 992
+    }
+  ],
+  "center_san_diego": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 816
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 849
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 848
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 777
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 938
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 909
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 870
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 884
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 864
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 848
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 756
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 961
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 1023
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 995
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 977
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 860
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 792
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 633
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 985
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 1029
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 526
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 954
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 849
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 762
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 602
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 943
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 1016
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1033
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 978
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 870
+    }
+  ],
+  "center_dallas": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 767
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 876
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 831
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 746
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 917
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 893
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 850
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 840
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 858
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 795
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 685
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 936
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 969
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 960
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 960
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 864
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 765
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 610
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 945
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 998
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 515
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 945
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 839
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 690
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 581
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 932
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 982
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 1008
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 948
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 843
+    }
+  ],
+  "center_jacksonville": [
+    {
+      "date": "2026-10-22",
+      "predicted_donors": 623
+    },
+    {
+      "date": "2026-10-23",
+      "predicted_donors": 645
+    },
+    {
+      "date": "2026-10-24",
+      "predicted_donors": 637
+    },
+    {
+      "date": "2026-10-25",
+      "predicted_donors": 526
+    },
+    {
+      "date": "2026-10-26",
+      "predicted_donors": 705
+    },
+    {
+      "date": "2026-10-27",
+      "predicted_donors": 677
+    },
+    {
+      "date": "2026-10-28",
+      "predicted_donors": 652
+    },
+    {
+      "date": "2026-10-29",
+      "predicted_donors": 649
+    },
+    {
+      "date": "2026-10-30",
+      "predicted_donors": 669
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_donors": 605
+    },
+    {
+      "date": "2026-11-01",
+      "predicted_donors": 505
+    },
+    {
+      "date": "2026-11-02",
+      "predicted_donors": 711
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_donors": 715
+    },
+    {
+      "date": "2026-11-04",
+      "predicted_donors": 707
+    },
+    {
+      "date": "2026-11-05",
+      "predicted_donors": 719
+    },
+    {
+      "date": "2026-11-06",
+      "predicted_donors": 701
+    },
+    {
+      "date": "2026-11-07",
+      "predicted_donors": 615
+    },
+    {
+      "date": "2026-11-08",
+      "predicted_donors": 468
+    },
+    {
+      "date": "2026-11-09",
+      "predicted_donors": 784
+    },
+    {
+      "date": "2026-11-10",
+      "predicted_donors": 823
+    },
+    {
+      "date": "2026-11-11",
+      "predicted_donors": 501
+    },
+    {
+      "date": "2026-11-12",
+      "predicted_donors": 780
+    },
+    {
+      "date": "2026-11-13",
+      "predicted_donors": 743
+    },
+    {
+      "date": "2026-11-14",
+      "predicted_donors": 610
+    },
+    {
+      "date": "2026-11-15",
+      "predicted_donors": 458
+    },
+    {
+      "date": "2026-11-16",
+      "predicted_donors": 841
+    },
+    {
+      "date": "2026-11-17",
+      "predicted_donors": 880
+    },
+    {
+      "date": "2026-11-18",
+      "predicted_donors": 832
+    },
+    {
+      "date": "2026-11-19",
+      "predicted_donors": 851
+    },
+    {
+      "date": "2026-11-20",
+      "predicted_donors": 750
+    }
+  ]
+}

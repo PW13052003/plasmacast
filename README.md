@@ -5,14 +5,14 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![XGBoost](https://img.shields.io/badge/Model-XGBoost-orange)
 ![FastAPI](https://img.shields.io/badge/API-FastAPI-green)
-![Accuracy](https://img.shields.io/badge/Accuracy-94.1%25-brightgreen)
+![MAE](https://img.shields.io/badge/MAE%25-6.0%25-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
 
 ## What is PlasmaCast?
 
-PlasmaCast is an end-to-end machine learning system that forecasts daily plasma donor demand at plasma donation centers across 10 major US cities. It combines real historical weather data, US federal holiday calendars, and population-scaled donor baselines to train an XGBoost regression model capable of predicting donor counts with a **5.9% mean error rate**.
+PlasmaCast is an end-to-end machine learning system that forecasts daily plasma donor demand at plasma donation centers across 10 major US cities. It combines real historical weather data, US federal holiday calendars, and population-scaled donor baselines to train an XGBoost regression model that predicts donor counts with a **6.0% mean error rate** — less than half the 13.0% error of a naive "same day last week" baseline.
 
 ---
 
@@ -82,17 +82,17 @@ brew install libomp
 ### 4. Generate the dataset
 Fetches real historical weather from Open-Meteo for all 10 cities (2020–2023):
 ```bash
-python src/data_gen.py
+python3 src/data_gen.py
 ```
 
 ### 5. Engineer features
 ```bash
-python src/features.py
+python3 src/features.py
 ```
 
 ### 6. Train the model
 ```bash
-python src/model.py
+python3 src/model.py
 ```
 This will print evaluation metrics and save the model to `src/data/model.pkl`.
 
@@ -124,10 +124,7 @@ Open your browser and go to: http://localhost:8000/
 | Training Rows | 10,820 |
 | Test Rows | 3,650 |
 | Features | 13 |
-| MAE | 5.12 donors/day |
-| RMSE | 7.95 donors/day |
-| MAE as % of Mean | 5.9% |
-| Overall Accuracy | 94.1% |
-
-
-
+| MAE | 85.98 donors/day |
+| RMSE | 134.33 donors/day |
+| MAE as % of Mean | 6.0% |
+| Naive Baseline (same day last week) | 13.0% MAE |

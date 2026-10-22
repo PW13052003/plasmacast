@@ -168,6 +168,7 @@ def generate_dataset():
         Returns:
             pd.DataFrame: The complete donor dataset.
     """
+    np.random.seed(42)
     us_holidays = holidays.US()
     all_data = []
 

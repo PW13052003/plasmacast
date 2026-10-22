@@ -15,16 +15,16 @@ const CITIES = {
 };
 
 const CITY_STATS = {
-  center_philly:       { population: "1,573,916", mae: "6.0%", region: "Northeast"  },
-  center_nyc:          { population: "8,478,072", mae: "6.1%", region: "Northeast"  },
+  center_philly:       { population: "1,573,916", mae: "5.8%", region: "Northeast"  },
+  center_nyc:          { population: "8,478,072", mae: "5.8%", region: "Northeast"  },
   center_la:           { population: "3,878,704", mae: "5.6%", region: "West Coast" },
   center_chicago:      { population: "2,721,308", mae: "6.1%", region: "Midwest"    },
-  center_houston:      { population: "2,390,125", mae: "6.2%", region: "South"      },
-  center_phoenix:      { population: "1,673,164", mae: "6.0%", region: "Southwest"  },
-  center_san_antonio:  { population: "1,526,656", mae: "5.8%", region: "South"      },
-  center_san_diego:    { population: "1,404,452", mae: "5.3%", region: "West Coast" },
-  center_dallas:       { population: "1,326,087", mae: "6.5%", region: "South"      },
-  center_jacksonville: { population: "1,009,833", mae: "5.7%", region: "Southeast"  },
+  center_houston:      { population: "2,390,125", mae: "6.3%", region: "South"      },
+  center_phoenix:      { population: "1,673,164", mae: "6.4%", region: "Southwest"  },
+  center_san_antonio:  { population: "1,526,656", mae: "5.9%", region: "South"      },
+  center_san_diego:    { population: "1,404,452", mae: "5.6%", region: "West Coast" },
+  center_dallas:       { population: "1,326,087", mae: "7.5%", region: "South"      },
+  center_jacksonville: { population: "1,009,833", mae: "5.8%", region: "Southeast"  },
 };
 
 const CITY_COORDS = {
@@ -41,16 +41,16 @@ const CITY_COORDS = {
 };
 
 const MAE_DATA = [
-  { city: "Dallas",        mae: 6.5 },
-  { city: "Houston",       mae: 6.2 },
+  { city: "Dallas",        mae: 7.5 },
+  { city: "Phoenix",       mae: 6.4 },
+  { city: "Houston",       mae: 6.3 },
   { city: "Chicago",       mae: 6.1 },
-  { city: "New York City", mae: 6.1 },
-  { city: "Philadelphia",  mae: 6.0 },
-  { city: "Phoenix",       mae: 6.0 },
-  { city: "San Antonio",   mae: 5.8 },
-  { city: "Jacksonville",  mae: 5.7 },
+  { city: "San Antonio",   mae: 5.9 },
+  { city: "Philadelphia",  mae: 5.8 },
+  { city: "New York City", mae: 5.8 },
+  { city: "Jacksonville",  mae: 5.8 },
   { city: "Los Angeles",   mae: 5.6 },
-  { city: "San Diego",     mae: 5.3 },
+  { city: "San Diego",     mae: 5.6 },
 ];
 
 const MODEL_CONFIG = [
@@ -60,8 +60,8 @@ const MODEL_CONFIG = [
   ["Train/Test Split", "75% / 25%"],
   ["Training Rows",    "10,820"],
   ["Test Rows",        "3,650"],
-  ["MAE",              "86.01 donors/day"],
-  ["RMSE",             "136.42 donors/day"],
+  ["MAE",              "85.98 donors/day"],
+  ["RMSE",             "134.33 donors/day"],
   ["MAE % of Mean",    "6.0%"],
 ];
 
@@ -328,16 +328,12 @@ function renderForecast(forecasts, city) {
   const maxVal = Math.max(...counts);
 
   // --- Summary cards ---
-  //document.getElementById("today-count").textContent    = forecasts[0].count;
   animateCounter("today-count", forecasts[0].count);
   document.getElementById("today-label").textContent    = `donors expected — ${forecasts[0].day} ${forecasts[0].date}`;
   document.getElementById("busiest-day").textContent    = forecasts[maxIdx].day;
-  //document.getElementById("busiest-count").textContent  = `${forecasts[maxIdx].count} donors — ${forecasts[maxIdx].date}`;
   document.getElementById("busiest-count").textContent  = `${forecasts[maxIdx].count} donors — ${forecasts[maxIdx].date}`;
   document.getElementById("quietest-day").textContent   = forecasts[minIdx].day;
-  //document.getElementById("quietest-count").textContent = `${forecasts[minIdx].count} donors — ${forecasts[minIdx].date}`;
   document.getElementById("quietest-count").textContent = `${forecasts[minIdx].count} donors — ${forecasts[minIdx].date}`;
-  //document.getElementById("week-total").textContent     = total.toLocaleString();
   animateCounter("week-total", total);
 
   // --- SVG Chart ---

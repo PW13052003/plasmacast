@@ -112,9 +112,6 @@
           <div id="last-updated" style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;"></div>
         </div>
         <div class="chart-legend">
-<!--        <div class="chart-header">-->
-<!--          <div class="card-title">7-Day Donor Forecast</div>-->
-<!--          <div class="chart-legend">-->
             <span class="legend-item"><span class="legend-dot high"></span>High demand</span>
             <span class="legend-item"><span class="legend-dot medium"></span>Moderate demand</span>
             <span class="legend-item"><span class="legend-dot low"></span>Low demand</span>
@@ -148,7 +145,7 @@
           MAE (Mean Absolute Error) measures how many donors off our predictions are on average per day.
           We show it as a percentage of each city's average donor count to make fair comparisons across
           cities of very different sizes. An MAE of 100 donors means very different things for NYC (~5,239 avg) vs Jacksonville (~624 avg), so percentage normalizes for that difference.
-          The tight 5.3%–6.5% range across all 10 cities shows the model generalizes well regardless of city size.
+          The tight 5.6%–7.5% range across all 10 cities shows the model generalizes well regardless of city size.
         </p>
       </div>
     </div>
@@ -165,12 +162,12 @@
       <!-- Metric Cards -->
       <div class="grid-3" style="margin-bottom:24px;">
         <div class="card metric-card">
-          <div class="metric-value accent">86.01</div>
+          <div class="metric-value accent">85.98</div>
           <div class="metric-label">Mean Absolute Error (donors/day)</div>
         </div>
         <div class="card metric-card">
-          <div class="metric-value accent">94.0%</div>
-          <div class="metric-label">Overall Prediction Accuracy</div>
+          <div class="metric-value accent">13.0%</div>
+          <div class="metric-label">Naive baseline error (same day last week)</div>
         </div>
         <div class="card metric-card">
           <div class="metric-value accent">6.0%</div>
